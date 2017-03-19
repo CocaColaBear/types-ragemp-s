@@ -8,4 +8,4 @@ Run this through npm:
 npm install --save github:CocaColaBear/types-ragemp#master
 ```
 
-That's it, now you can use ragemp types!
+That's all, now you can use ragemp types!

@@ -1,0 +1,8 @@
+{
+  "name": "@types/ragemp",
+    "preferGlobal": true,
+    "version": "0.1",
+    "author": "CocaColaBear",
+    "description": "Rage:MP TypeScript type definition",
+    "license": "MIT"
+}

@@ -10,7 +10,7 @@ interface Mp {
 	objects: ObjectMpPool;
 	vehicles: VehicleMpPool;
 
-	Vector3: Vector3;
+	Vector3: Vector3Mp;
 
 	joaat(str: string): number;
 	joaat(strs: string[]): number[];
@@ -21,7 +21,7 @@ interface EntityMp {
 	dimension: number;
 	id: string;
 	model: number;
-	position: Vector3;
+	position: Vector3Mp;
 	type: string;
 	
 	destroy(): void;
@@ -71,7 +71,7 @@ interface PlayerMp extends EntityMp {
 	setHairColour(...args: any[]): void; // ???
 	setHeadBlend(...args: any[]): void; // ???
 	setProp(prop: PlayerPropMp, drawable: number, texture: number): void;
-	spawn(position: Vector3): void;
+	spawn(position: Vector3Mp): void;
 	updateHeadBlend(...args: any[]): void; // ???
 }
 
@@ -86,12 +86,12 @@ interface VehicleMp extends EntityMp {
 	locked: boolean;
 	neonEnabled: boolean;
 	numberPlate: string;
-	position: Vector3;
+	position: Vector3Mp;
 	rocketBoost: boolean;
-	rotation: Vector3;
+	rotation: Vector3Mp;
 	siren: boolean;
 	steerAngle: number;
-	velocity: Vector3;
+	velocity: Vector3Mp;
 
 	explode(...args: any[]): void; // ???
 	getColour(...args: any[]): void; // ???
@@ -116,7 +116,7 @@ interface EventMp extends EntityMpPool<null> {
 }
 
 interface ObjectMp extends EntityMp {
-	rotation: Vector3;
+	rotation: Vector3Mp;
 }
 
 interface PickupMp extends EntityMp {
@@ -135,7 +135,7 @@ interface BlipMp extends EntityMp {
 
 interface CheckpointMp extends EntityMp {
 	colour: number;
-	destination: Vector3;
+	destination: Vector3Mp;
 	radius: number;
 	visible: boolean;
 
@@ -147,7 +147,7 @@ interface CheckpointMp extends EntityMp {
 
 interface MarkertMp extends EntityMp {
 	colour: number;
-	direction: Vector3;
+	direction: Vector3Mp;
 	scale: number;
 	visible: boolean;
 
@@ -160,7 +160,7 @@ interface MarkertMp extends EntityMp {
 interface ColshapeMp extends EntityMp {
 	shapeType: string;
 
-	isPointWithin(point: Vector3): boolean;
+	isPointWithin(point: Vector3Mp): boolean;
 }
 
 interface EntityMpPool<TEntity> {
@@ -176,19 +176,19 @@ interface EntityMpPool<TEntity> {
 
 interface PlayerMpPool extends EntityMpPool<PlayerMp> {
 	broadcast(text: string): void;
-	broadcastInRange(position: Vector3, text: string): void; // ???
-	broadcastInRange(position: Vector3, dimension: number, text: string): void; // ???
+	broadcastInRange(position: Vector3Mp, text: string): void; // ???
+	broadcastInRange(position: Vector3Mp, dimension: number, text: string): void; // ???
 	call(...args: any[]): void; // ???
 	callInRange(...args: any[]): void; // ???
 	callInDimension(...args: any[]): void; // ???
 }
 
 interface VehicleMpPool extends EntityMpPool<VehicleMp> {
-	"new"(vehicleHash: number, position: Vector3): VehicleMp;
+	"new"(vehicleHash: number, position: Vector3Mp): VehicleMp;
 }
 
 interface ObjectMpPool extends EntityMpPool<ObjectMp> {
-	"new"(objectHash: number, position: Vector3, rotation: Vector3): ObjectMp;
+	"new"(objectHash: number, position: Vector3Mp, rotation: Vector3Mp): ObjectMp;
 }
 
 interface PickupMpPool extends EntityMpPool<PickupMp> {
@@ -196,8 +196,8 @@ interface PickupMpPool extends EntityMpPool<PickupMp> {
 }
 
 interface BlipMpPool extends EntityMpPool<BlipMp> {
-	"new"(position: Vector3): BlipMp;
-	"new"(position: Vector3, radius: number): BlipMp;
+	"new"(position: Vector3Mp): BlipMp;
+	"new"(position: Vector3Mp, radius: number): BlipMp;
 	"new"(entityToAttachTo: EntityMp): BlipMp;
 }
 
@@ -223,8 +223,8 @@ interface EnvironmentMp {
 	time: TimeMp;
 }
 
-interface Vector3 {
-	new(x: number, y: number, z: number): Vector3;
+interface Vector3Mp {
+	new(x: number, y: number, z: number): Vector3Mp;
 
 	x: number;
 	y: number;

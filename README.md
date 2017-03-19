@@ -5,7 +5,7 @@ Add to your project.json, in "dependencies" section:
 
 ``` json
 "dependencies": {
-  "@types/ragemp" : "git://github.com/CocaColaBear/types-ragemp.git#commit-ish",
+  "@types/ragemp": "github:CocaColaBear/types-ragemp#master",
 }
 ```
 

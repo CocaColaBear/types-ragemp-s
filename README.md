@@ -15,4 +15,4 @@ After that, in the root directory run:
 npm install
 ```
 
-That's all!
+That's it, now you can use ragemp types!

@@ -1,8 +1,12 @@
 {
-  "name": "@types/ragemp",
-    "preferGlobal": true,
-    "version": "0.1.4",
-    "author": "CocaColaBear",
-    "description": "Rage:MP TypeScript type definition",
-    "license": "MIT"
+	"name": "@types/ragemp",
+	"preferGlobal": true,
+		"version": "0.1.5",
+		"author": "CocaColaBear",
+		"description": "Rage:MP TypeScript type definition",
+		"license": "MIT",
+		"repository": {
+			"type": "git",
+			"url": "https://github.com/CocaColaBear/types-ragemp.git"
+		}
 }

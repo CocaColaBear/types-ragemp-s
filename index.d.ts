@@ -46,7 +46,7 @@ interface PlayerMp extends EntityMp {
 	readonly isLeavingVehicle: boolean;
 	readonly ping: number;
 	readonly seat: VehicleSeatMp;
-	readonly weapon: number; // ???
+	readonly weapon: number; // TODO
 	readonly vehicle: VehicleMp;
 
 	ban(reason: string): void;
@@ -55,24 +55,24 @@ interface PlayerMp extends EntityMp {
 		readonly drawable: number, 
 		readonly texture: number,
 		readonly palette: number };
-	getFaceFeature(...args: any[]): void; // ???
-	getHeadBlend(...args: any[]): void; // ???
+	getFaceFeature(...args: any[]): void; // TODO
+	getHeadBlend(...args: any[]): void; // TODO
 	getProp(prop: PlayerPropMp): { readonly drawable: number, readonly texture: number };
 	giveWeapon(weaponHash: number, ammo: number): void;
 	giveWeapon(weaponHashes: number[], ammo: number): void;
-	invoke(...args: any[]): void; // ???
+	invoke(...args: any[]): void; // TODO
 	kick(reason: string): void;
 	notify(message: string): void;
 	outputChatBox(message: string): void;
 	putIntoVehicle(vehicle: VehicleMp, seat: VehicleSeatMp): void;
 	removeFromVehicle(): void;
 	setClothes(component: ClothesComponentMp, drawable: number, texture: number, palette: number): void;
-	setFaceFeature(...args: any[]): void; // ???
-	setHairColour(...args: any[]): void; // ???
-	setHeadBlend(...args: any[]): void; // ???
+	setFaceFeature(...args: any[]): void; // TODO
+	setHairColour(...args: any[]): void; // TODO
+	setHeadBlend(...args: any[]): void; // TODO
 	setProp(prop: PlayerPropMp, drawable: number, texture: number): void;
 	spawn(position: Vector3Mp): void;
-	updateHeadBlend(...args: any[]): void; // ???
+	updateHeadBlend(...args: any[]): void; // TODO
 }
 
 interface VehicleMp extends EntityMp {
@@ -93,22 +93,22 @@ interface VehicleMp extends EntityMp {
 	steerAngle: number;
 	velocity: Vector3Mp;
 
-	explode(...args: any[]): void; // ???
-	getColour(...args: any[]): void; // ???
-	getColourRGB(...args: any[]): void; // ???
-	getMod(...args: any[]): void; // ???
-	getNeonColour(...args: any[]): void; // ???
-	getOccupant(...args: any[]): PlayerMp; // ???
-	getOccupants(...args: any[]): PlayerMp[]; // ???
-	getPaint(...args: any[]): void; // ???
+	explode(...args: any[]): void; // TODO
+	getColour(...args: any[]): void; // TODO
+	getColourRGB(...args: any[]): void; // TODO
+	getMod(...args: any[]): void; // TODO
+	getNeonColour(...args: any[]): void; // TODO
+	getOccupant(...args: any[]): PlayerMp; // TODO
+	getOccupants(...args: any[]): PlayerMp[]; // TODO
+	getPaint(...args: any[]): void; // TODO
 	repair(): void;
-	setColour(...args: any[]): void; // ???
-	setColourRGB(...args: any[]): void; // ???
-	setMod(...args: any[]): void; // ???
-	setNeonColour(...args: any[]): void; // ???
-	setPaint(...args: any[]): void; // ???
-	setOccupant(...args: any[]): void; // ???
-	spawn(...args: any[]): void; // ???
+	setColour(...args: any[]): void; // TODO
+	setColourRGB(...args: any[]): void; // TODO
+	setMod(...args: any[]): void; // TODO
+	setNeonColour(...args: any[]): void; // TODO
+	setPaint(...args: any[]): void; // TODO
+	setOccupant(...args: any[]): void; // TODO
+	spawn(...args: any[]): void; // TODO
 }
 
 interface EventMp extends EntityMpPool<null> {
@@ -125,7 +125,7 @@ interface PickupMp extends EntityMp {
 
 interface BlipMp extends EntityMp {
 	colour: number;
-	name: number;
+	name: string;
 	radius: number;
 	scale: number;
 
@@ -139,9 +139,9 @@ interface CheckpointMp extends EntityMp {
 	radius: number;
 	visible: boolean;
 
-	getColour(args: any[]): void; // ???
+	getColour(args: any[]): void; // TODO
 	hideFor(player: PlayerMp): void;
-	setColour(args: any[]): void; // ???
+	setColour(args: any[]): void; // TODO
 	showFor(player: PlayerMp): void;
 }
 
@@ -151,9 +151,9 @@ interface MarkertMp extends EntityMp {
 	scale: number;
 	visible: boolean;
 
-	getColour(args: any[]): void; // ???
+	getColour(args: any[]): void; // TODO
 	hideFor(player: PlayerMp): void;
-	setColour(args: any[]): void; // ???
+	setColour(args: any[]): void; // TODO
 	showFor(player: PlayerMp): void;
 }
 
@@ -169,18 +169,18 @@ interface EntityMpPool<TEntity> {
 
 	at(id: number): TEntity;
 	forEach(entity: (entity: TEntity) => void): void;
-	forEachInRange(range: number, entity: (entity: TEntity) => void): void; // ???
-	forEachInDimension(dimension: number, entity: (entity: TEntity) => void): void; // ???
+	forEachInRange(range: number, entity: (entity: TEntity) => void): void; // TODO
+	forEachInDimension(dimension: number, entity: (entity: TEntity) => void): void; // TODO
 	toArray(): TEntity[];
 }
 
 interface PlayerMpPool extends EntityMpPool<PlayerMp> {
 	broadcast(text: string): void;
-	broadcastInRange(position: Vector3Mp, text: string): void; // ???
-	broadcastInRange(position: Vector3Mp, dimension: number, text: string): void; // ???
-	call(...args: any[]): void; // ???
-	callInRange(...args: any[]): void; // ???
-	callInDimension(...args: any[]): void; // ???
+	broadcastInRange(position: Vector3Mp, text: string): void; // TODO
+	broadcastInRange(position: Vector3Mp, dimension: number, text: string): void; // TODO
+	call(...args: any[]): void; // TODO
+	callInRange(...args: any[]): void; // TODO
+	callInDimension(...args: any[]): void; // TODO
 }
 
 interface VehicleMpPool extends EntityMpPool<VehicleMp> {
@@ -192,7 +192,7 @@ interface ObjectMpPool extends EntityMpPool<ObjectMp> {
 }
 
 interface PickupMpPool extends EntityMpPool<PickupMp> {
-	"new"(...args: any[]): PickupMp; // ???
+	"new"(...args: any[]): PickupMp; // TODO
 }
 
 interface BlipMpPool extends EntityMpPool<BlipMp> {
@@ -202,20 +202,21 @@ interface BlipMpPool extends EntityMpPool<BlipMp> {
 }
 
 interface CheckpointMpPool extends EntityMpPool<CheckpointMp> {
-	"new"(...args: any[]): CheckpointMp; // ???
+	"new"(...args: any[]): CheckpointMp; // TODO
 }
 
 interface ColshapeMpPool extends EntityMpPool<ColshapeMp> {
-	newCircle(...args: any[]): ColshapeMp; // ???
-	newCuboid(...args: any[]): ColshapeMp; // ???
-	newRectangle(...args: any[]): ColshapeMp; // ???
-	newSphere(...args: any[]): ColshapeMp; // ???
-	newTube(...args: any[]): ColshapeMp; // ???
+	newCircle(...args: any[]): ColshapeMp; // TODO
+	newCuboid(...args: any[]): ColshapeMp; // TODO
+	newRectangle(...args: any[]): ColshapeMp; // TODO
+	newSphere(...args: any[]): ColshapeMp; // TODO
+	newTube(...args: any[]): ColshapeMp; // TODO
 }
 
 interface EventMpPool extends EntityMpPool<EventMp> {
-	add(eventName: string, callback: (...args: any[]) => void) : void;
-	call(eventName: string, ...args: any[]) : void;
+	add(eventName: string, callback: (...args: any[]) => void): void;
+	addCommand(...args: any[]): void; // TODO
+	call(eventName: string, ...args: any[]): void;
 }
 
 interface EnvironmentMp {

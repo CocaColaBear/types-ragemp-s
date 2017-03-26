@@ -221,7 +221,7 @@ interface EventMpPool extends EntityMpPool<EventMp> {
 
 interface EnvironmentMp {
 	weather: string;
-	time: TimeMp;
+	time: { hour: number, minute: number, second: number };
 }
 
 interface Vector3Mp {
@@ -230,12 +230,6 @@ interface Vector3Mp {
 	x: number;
 	y: number;
 	z: number;
-}
-
-interface TimeMp {
-	hour: number;
-	minute: number;
-	second: number;
 }
 
 declare const enum ClothesComponentMp {

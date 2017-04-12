@@ -64,6 +64,7 @@ interface PlayerMp extends EntityMp {
 	kick(reason: string): void;
 	notify(message: string): void;
 	outputChatBox(message: string): void;
+	playAnimation(dict: string, name: string): void;
 	putIntoVehicle(vehicle: VehicleMp, seat: VehicleSeatMp): void;
 	removeFromVehicle(): void;
 	setClothes(component: ClothesComponentMp, drawable: number, texture: number, palette: number): void;
@@ -169,15 +170,15 @@ interface EntityMpPool<TEntity> {
 
 	at(id: number): TEntity;
 	forEach(entity: (entity: TEntity) => void): void;
-	forEachInRange(range: number, entity: (entity: TEntity) => void): void; // TODO
-	forEachInDimension(dimension: number, entity: (entity: TEntity) => void): void; // TODO
+	forEachInRange(position: Vector3Mp, range: number, entity: (entity: TEntity) => void): void;
+	forEachInDimension(position: Vector3Mp, range: number, dimension: number, entity: (entity: TEntity) => void): void; // TODO
 	toArray(): TEntity[];
 }
 
 interface PlayerMpPool extends EntityMpPool<PlayerMp> {
 	broadcast(text: string): void;
-	broadcastInRange(position: Vector3Mp, text: string): void; // TODO
-	broadcastInRange(position: Vector3Mp, dimension: number, text: string): void; // TODO
+	broadcastInRange(position: Vector3Mp, range: number, text: string): void;
+	broadcastInRange(position: Vector3Mp, range: number, dimension: number, text: string): void;
 	call(...args: any[]): void; // TODO
 	callInRange(...args: any[]): void; // TODO
 	callInDimension(...args: any[]): void; // TODO

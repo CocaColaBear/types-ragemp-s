@@ -185,7 +185,7 @@ interface PlayerMpPool extends EntityMpPool<PlayerMp> {
 }
 
 interface VehicleMpPool extends EntityMpPool<VehicleMp> {
-	"new"(vehicleHash: number, position: Vector3Mp, heading: number, dimension: number): VehicleMp;
+	"new"(vehicleHash: number, position: Vector3Mp, heading: number, dimension?: number): VehicleMp;
 }
 
 interface ObjectMpPool extends EntityMpPool<ObjectMp> {

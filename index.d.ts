@@ -171,7 +171,7 @@ interface EntityMpPool<TEntity> {
 	at(id: number): TEntity;
 	forEach(entity: (entity: TEntity) => void): void;
 	forEachInRange(position: Vector3Mp, range: number, entity: (entity: TEntity) => void): void;
-	forEachInDimension(position: Vector3Mp, range: number, dimension: number, entity: (entity: TEntity) => void): void; // TODO
+	forEachInDimension(position: Vector3Mp, range: number, dimension: number, entity: (entity: TEntity) => void): void;
 	toArray(): TEntity[];
 }
 
@@ -179,9 +179,9 @@ interface PlayerMpPool extends EntityMpPool<PlayerMp> {
 	broadcast(text: string): void;
 	broadcastInRange(position: Vector3Mp, range: number, text: string): void;
 	broadcastInRange(position: Vector3Mp, range: number, dimension: number, text: string): void;
-	call(...args: any[]): void; // TODO
-	callInRange(...args: any[]): void; // TODO
-	callInDimension(...args: any[]): void; // TODO
+	call(eventName: string, ...args: any[]): void;
+	callInDimension(eventName: string, ...args: any[]): void;
+	callInRange(eventName: string, ...args: any[]): void;
 }
 
 interface VehicleMpPool extends EntityMpPool<VehicleMp> {

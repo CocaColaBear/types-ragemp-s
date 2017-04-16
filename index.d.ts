@@ -180,6 +180,7 @@ interface PlayerMpPool extends EntityMpPool<PlayerMp> {
 	broadcastInRange(position: Vector3Mp, range: number, text: string): void;
 	broadcastInRange(position: Vector3Mp, range: number, dimension: number, text: string): void;
 	call(eventName: string, ...args: any[]): void;
+	call(players: PlayerMp[], eventName: string, ...args: any[]): void;
 	callInDimension(eventName: string, ...args: any[]): void;
 	callInRange(eventName: string, ...args: any[]): void;
 }

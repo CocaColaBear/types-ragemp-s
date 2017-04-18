@@ -217,7 +217,7 @@ interface ColshapeMpPool extends EntityMpPool<ColshapeMp> {
 
 interface EventMpPool extends EntityMpPool<EventMp> {
 	add(eventName: string, callback: (...args: any[]) => void): void;
-	addCommand(...args: any[]): void; // TODO
+	addCommand(commandName: string, callback: (player: PlayerMp, fullText: string, ...args: string[]) => void): void;
 	call(eventName: string, ...args: any[]): void;
 }
 

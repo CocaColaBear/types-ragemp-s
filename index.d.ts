@@ -19,7 +19,7 @@ interface Mp {
 interface EntityMp {
 	alpha: number;
 	dimension: number;
-	id: string;
+	id: number;
 	model: number;
 	position: Vector3Mp;
 	type: string;

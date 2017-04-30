@@ -4,7 +4,7 @@ interface Mp {
 	colshapes: ColshapeMpPool;
 	environment: EnvironmentMp;
 	events: EventMpPool;
-	markers: MarkertMp;
+	markers: MarkerMpPool;
 	pickups: PickupMpPool;
 	players: PlayerMpPool;
 	objects: ObjectMpPool;
@@ -95,8 +95,8 @@ interface VehicleMp extends EntityMp {
 	velocity: Vector3Mp;
 
 	explode(...args: any[]): void; // TODO
-	getColour(...args: any[]): void; // TODO
-	getColourRGB(...args: any[]): void; // TODO
+	getColour(): number; // TODO
+	getColourRGB(): number[];
 	getMod(...args: any[]): void; // TODO
 	getNeonColour(...args: any[]): void; // TODO
 	getOccupant(...args: any[]): PlayerMp; // TODO
@@ -104,7 +104,7 @@ interface VehicleMp extends EntityMp {
 	getPaint(...args: any[]): void; // TODO
 	repair(): void;
 	setColour(...args: any[]): void; // TODO
-	setColourRGB(...args: any[]): void; // TODO
+	setColourRGB(red: number, green: number, blue: number): void;
 	setMod(...args: any[]): void; // TODO
 	setNeonColour(...args: any[]): void; // TODO
 	setPaint(...args: any[]): void; // TODO
@@ -140,21 +140,20 @@ interface CheckpointMp extends EntityMp {
 	radius: number;
 	visible: boolean;
 
-	getColour(args: any[]): void; // TODO
+	getColour(): number[];
 	hideFor(player: PlayerMp): void;
-	setColour(args: any[]): void; // TODO
+	setColour(red: number, green: number, blue: number, alpha: number): void;
 	showFor(player: PlayerMp): void;
 }
 
-interface MarkertMp extends EntityMp {
-	colour: number;
+interface MarkerMp extends EntityMp {
 	direction: Vector3Mp;
 	scale: number;
 	visible: boolean;
 
-	getColour(args: any[]): void; // TODO
+	getColour(): number[];
 	hideFor(player: PlayerMp): void;
-	setColour(args: any[]): void; // TODO
+	setColour(red: number, green: number, blue: number, alpha: number): void;
 	showFor(player: PlayerMp): void;
 }
 
@@ -204,16 +203,27 @@ interface BlipMpPool extends EntityMpPool<BlipMp> {
 }
 
 interface CheckpointMpPool extends EntityMpPool<CheckpointMp> {
-	"new"(type: number, pos: Vector3Mp, direction: Vector3Mp, radius: number, r: number, g: number, b: number, a: number, dimension: number): CheckpointMp;
-	"new"(type: number, pos: Vector3Mp, direction: Vector3Mp, radius: number, r: number, g: number, b: number, a: number, visible: boolean): CheckpointMp;
-	"new"(type: number, pos: Vector3Mp, direction: Vector3Mp, radius: number, r: number, g: number, b: number, a: number, dimension: number, visible: boolean): CheckpointMp;
-	
+	"new"(type: number, position: Vector3Mp, rotation: Vector3Mp, direction: Vector3Mp, radius: number,
+		red: number, green: number, blue: number, alpha: number, visible: boolean): CheckpointMp;
+	"new"(type: number, position: Vector3Mp, rotation: Vector3Mp, direction: Vector3Mp, radius: number,
+		red: number, green: number, blue: number, alpha: number, dimension: number): CheckpointMp;
+	"new"(type: number, position: Vector3Mp, rotation: Vector3Mp, direction: Vector3Mp, radius: number,
+		red: number, green: number, blue: number, alpha: number, visible: boolean, dimension: number): CheckpointMp;
+}
+
+interface MarkerMpPool extends EntityMpPool<MarkerMp> {
+	"new"(type: number, position: Vector3Mp, direction: Vector3Mp, radius: number,
+		red: number, green: number, blue: number, alpha: number, visible: boolean): MarkerMp;
+	"new"(type: number, position: Vector3Mp, direction: Vector3Mp, radius: number,
+		red: number, green: number, blue: number, alpha: number, dimension: number): MarkerMp;
+	"new"(type: number, position: Vector3Mp, direction: Vector3Mp, radius: number,
+		red: number, green: number, blue: number, alpha: number, visible: boolean, dimension: number): MarkerMp;
 }
 
 interface ColshapeMpPool extends EntityMpPool<ColshapeMp> {
 	newCircle(...args: any[]): ColshapeMp; // TODO
 	newCuboid(...args: any[]): ColshapeMp; // TODO
-	newRectangle(...args: any[]): ColshapeMp; // TODO
+	newRectangle(x: number, y: number, width: number, height: number): ColshapeMp;
 	newSphere(...args: any[]): ColshapeMp; // TODO
 	newTube(...args: any[]): ColshapeMp; // TODO
 }

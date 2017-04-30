@@ -204,7 +204,10 @@ interface BlipMpPool extends EntityMpPool<BlipMp> {
 }
 
 interface CheckpointMpPool extends EntityMpPool<CheckpointMp> {
-	"new"(...args: any[]): CheckpointMp; // TODO
+	"new"(type: number, pos: Vector3Mp, direction: Vector3Mp, radius: number, r: number, g: number, b: number, a: number, dimension: number): CheckpointMp;
+	"new"(type: number, pos: Vector3Mp, direction: Vector3Mp, radius: number, r: number, g: number, b: number, a: number, visible: boolean): CheckpointMp;
+	"new"(type: number, pos: Vector3Mp, direction: Vector3Mp, radius: number, r: number, g: number, b: number, a: number, dimension: number, visible: boolean): CheckpointMp;
+	
 }
 
 interface ColshapeMpPool extends EntityMpPool<ColshapeMp> {

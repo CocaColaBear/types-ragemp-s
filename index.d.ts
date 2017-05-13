@@ -212,11 +212,11 @@ interface CheckpointMpPool extends EntityMpPool<CheckpointMp> {
 }
 
 interface MarkerMpPool extends EntityMpPool<MarkerMp> {
-	"new"(type: number, position: Vector3Mp, direction: Vector3Mp, radius: number,
+	"new"(type: number, position: Vector3Mp, rotation: Vector3Mp, direction: Vector3Mp, radius: number,
 		red: number, green: number, blue: number, alpha: number, visible: boolean): MarkerMp;
-	"new"(type: number, position: Vector3Mp, direction: Vector3Mp, radius: number,
+	"new"(type: number, position: Vector3Mp, rotation: Vector3Mp, direction: Vector3Mp, radius: number,
 		red: number, green: number, blue: number, alpha: number, dimension: number): MarkerMp;
-	"new"(type: number, position: Vector3Mp, direction: Vector3Mp, radius: number,
+	"new"(type: number, position: Vector3Mp, rotation: Vector3Mp, direction: Vector3Mp, radius: number,
 		red: number, green: number, blue: number, alpha: number, visible: boolean, dimension: number): MarkerMp;
 }
 

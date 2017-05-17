@@ -221,11 +221,11 @@ interface MarkerMpPool extends EntityMpPool<MarkerMp> {
 }
 
 interface ColshapeMpPool extends EntityMpPool<ColshapeMp> {
-	newCircle(...args: any[]): ColshapeMp; // TODO
-	newCuboid(...args: any[]): ColshapeMp; // TODO
+	newCircle(x: number, y: number, range: number): ColshapeMp;
+	newCuboid(x: number, y: number, z: number, width: number, depth: number, height: number): ColshapeMp;
 	newRectangle(x: number, y: number, width: number, height: number): ColshapeMp;
-	newSphere(...args: any[]): ColshapeMp; // TODO
-	newTube(...args: any[]): ColshapeMp; // TODO
+	newSphere(x: number, y: number, z: number, range: number): ColshapeMp;
+	newTube(x: number, y: number, z: number, range: number, height: number): ColshapeMp;
 }
 
 interface EventMpPool extends EntityMpPool<EventMp> {

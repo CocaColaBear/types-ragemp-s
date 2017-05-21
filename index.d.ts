@@ -60,7 +60,7 @@ interface PlayerMp extends EntityMp {
 	getProp(prop: PlayerPropMp): { readonly drawable: number, readonly texture: number };
 	giveWeapon(weaponHash: number, ammo: number): void;
 	giveWeapon(weaponHashes: number[], ammo: number): void;
-	invoke(...args: any[]): void; // TODO
+	invoke(hash: string, ...args: any[]): void;
 	kick(reason: string): void;
 	notify(message: string): void;
 	outputChatBox(message: string): void;
@@ -68,9 +68,10 @@ interface PlayerMp extends EntityMp {
 	putIntoVehicle(vehicle: VehicleMp, seat: VehicleSeatMp): void;
 	removeFromVehicle(): void;
 	setClothes(component: ClothesComponentMp, drawable: number, texture: number, palette: number): void;
-	setFaceFeature(...args: any[]): void; // TODO
-	setHairColour(...args: any[]): void; // TODO
-	setHeadBlend(...args: any[]): void; // TODO
+	setFaceFeature(index: number, scale: number): void;
+	setHairColour(firstColour: number, secondColour: number): void;
+	setHeadBlend(shapeFirstId: number, shapeSecondId: number, shapeThirdId: number, skinFirstId: number, skinSecondId: number,
+		skinThirdId: number, shapeMix: number, skinMix: number, thirdMix: number): void;
 	setProp(prop: PlayerPropMp, drawable: number, texture: number): void;
 	spawn(position: Vector3Mp): void;
 	updateHeadBlend(...args: any[]): void; // TODO
@@ -98,15 +99,15 @@ interface VehicleMp extends EntityMp {
 	getColour(): number; // TODO
 	getColourRGB(): number[];
 	getMod(...args: any[]): void; // TODO
-	getNeonColour(...args: any[]): void; // TODO
+	getNeonColour(): number[];
 	getOccupant(...args: any[]): PlayerMp; // TODO
 	getOccupants(...args: any[]): PlayerMp[]; // TODO
 	getPaint(...args: any[]): void; // TODO
 	repair(): void;
 	setColour(...args: any[]): void; // TODO
-	setColourRGB(red: number, green: number, blue: number): void;
+	setColourRGB(red1: number, green1: number, blue1: number, red2: number, green2: number, blue2: number): void;
 	setMod(...args: any[]): void; // TODO
-	setNeonColour(...args: any[]): void; // TODO
+	setNeonColour(red: number, green: number, blue: number): void;
 	setPaint(...args: any[]): void; // TODO
 	setOccupant(...args: any[]): void; // TODO
 	spawn(...args: any[]): void; // TODO

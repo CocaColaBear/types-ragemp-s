@@ -96,7 +96,7 @@ interface VehicleMp extends EntityMp {
 	velocity: Vector3Mp;
 
 	explode(...args: any[]): void; // TODO
-	getColour(): number; // TODO
+	getColour(): number;
 	getColourRGB(): number[];
 	getMod(...args: any[]): void; // TODO
 	getNeonColour(): number[];
@@ -238,6 +238,9 @@ interface EventMpPool extends EntityMpPool<EventMp> {
 interface EnvironmentMp {
 	weather: string;
 	time: { hour: number, minute: number, second: number };
+
+	setWeatherTransition(weather: string): void;
+	setWeatherTransition(weather: string, duration: number): void;
 }
 
 interface Vector3Mp {

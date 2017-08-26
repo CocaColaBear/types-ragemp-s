@@ -64,7 +64,7 @@ interface PlayerMp extends EntityMp {
 	kick(reason: string): void;
 	notify(message: string): void;
 	outputChatBox(message: string): void;
-	playAnimation(dict: string, name: string): void;
+	playAnimation(dict: string, name: string, speed: number, flag: number): void;
 	putIntoVehicle(vehicle: VehicleMp, seat: VehicleSeatMp): void;
 	removeFromVehicle(): void;
 	setClothes(component: ClothesComponentMp, drawable: number, texture: number, palette: number): void;
@@ -169,6 +169,7 @@ interface EntityMpPool<TEntity> {
 	readonly size: number;
 
 	at(id: number): TEntity;
+	exists(entity: TEntity): boolean;
 	forEach(entity: (entity: TEntity) => void): void;
 	forEachInRange(position: Vector3Mp, range: number, entity: (entity: TEntity) => void): void;
 	forEachInDimension(position: Vector3Mp, range: number, dimension: number, entity: (entity: TEntity) => void): void;
@@ -204,11 +205,11 @@ interface BlipMpPool extends EntityMpPool<BlipMp> {
 }
 
 interface CheckpointMpPool extends EntityMpPool<CheckpointMp> {
-	"new"(type: number, position: Vector3Mp, rotation: Vector3Mp, direction: Vector3Mp, radius: number,
+	"new"(type: number, position: Vector3Mp, direction: Vector3Mp, radius: number,
 		red: number, green: number, blue: number, alpha: number, visible: boolean): CheckpointMp;
-	"new"(type: number, position: Vector3Mp, rotation: Vector3Mp, direction: Vector3Mp, radius: number,
+	"new"(type: number, position: Vector3Mp, direction: Vector3Mp, radius: number,
 		red: number, green: number, blue: number, alpha: number, dimension: number): CheckpointMp;
-	"new"(type: number, position: Vector3Mp, rotation: Vector3Mp, direction: Vector3Mp, radius: number,
+	"new"(type: number, position: Vector3Mp, direction: Vector3Mp, radius: number,
 		red: number, green: number, blue: number, alpha: number, visible: boolean, dimension: number): CheckpointMp;
 }
 

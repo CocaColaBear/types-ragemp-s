@@ -199,9 +199,9 @@ interface PickupMpPool extends EntityMpPool<PickupMp> {
 }
 
 interface BlipMpPool extends EntityMpPool<BlipMp> {
-	"new"(position: Vector3Mp): BlipMp;
-	"new"(position: Vector3Mp, radius: number): BlipMp;
-	"new"(entityToAttachTo: EntityMp): BlipMp;
+	"new"(model: number, position: Vector3Mp): BlipMp;
+	"new"(model: number, position: Vector3Mp, radius: number): BlipMp;
+	"new"(model: number, entityToAttachTo: EntityMp): BlipMp;
 }
 
 interface CheckpointMpPool extends EntityMpPool<CheckpointMp> {

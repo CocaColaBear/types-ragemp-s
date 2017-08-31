@@ -281,4 +281,21 @@ declare const enum VehicleSeatMp {
 	Passenger3 = 3
 }
 
+declare const enum EventKeysMp {
+	playerJoin = "playerJoin",
+	playerQuit = "playerQuit",
+	playerDeath = "playerDeath",
+	playerSpawn = "playerSpawn",
+	playerChat = "playerChat",
+	playerCommand = "playerCommand",
+	playerEnterVehicle = "playerEnterVehicle",
+	playerEnteredVehicle = "playerEnteredVehicle",
+	playerExitVehicle = "playerExitVehicle",
+	playerLeftVehicle = "playerLeftVehicle",
+	playerEnterCheckpoint = "playerEnterCheckpoint",
+	playerExitCheckpoint = "playerExitCheckpoint",
+	playerEnterColshape = "playerEnterColshape",
+	playerExitColshape = "playerExitColshape"
+}
+
 declare var mp: Mp;

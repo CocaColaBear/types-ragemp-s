@@ -19,10 +19,10 @@ interface Mp {
 interface EntityMp {
 	alpha: number;
 	dimension: number;
-	id: number;
 	model: number;
 	position: Vector3Mp;
-	type: string;
+	readonly id: number;
+	readonly type: EntityTypeMp;
 	
 	destroy(): void;
 }
@@ -46,7 +46,7 @@ interface PlayerMp extends EntityMp {
 	readonly isLeavingVehicle: boolean;
 	readonly ping: number;
 	readonly seat: VehicleSeatMp;
-	readonly weapon: number; // TODO
+	readonly weapon: number;
 	readonly vehicle: VehicleMp;
 
 	ban(reason: string): void;
@@ -55,7 +55,7 @@ interface PlayerMp extends EntityMp {
 		readonly drawable: number, 
 		readonly texture: number,
 		readonly palette: number };
-	getFaceFeature(...args: any[]): void; // TODO
+	getFaceFeature(index: number): number;
 	getHeadBlend(...args: any[]): void; // TODO
 	getProp(prop: PlayerPropMp): { readonly drawable: number, readonly texture: number };
 	giveWeapon(weaponHash: number, ammo: number): void;
@@ -74,7 +74,7 @@ interface PlayerMp extends EntityMp {
 		skinThirdId: number, shapeMix: number, skinMix: number, thirdMix: number): void;
 	setProp(prop: PlayerPropMp, drawable: number, texture: number): void;
 	spawn(position: Vector3Mp): void;
-	updateHeadBlend(...args: any[]): void; // TODO
+	updateHeadBlend(shapeMix: number, skinMix: number, thirdMix: number): void;
 }
 
 interface VehicleMp extends EntityMp {
@@ -95,22 +95,22 @@ interface VehicleMp extends EntityMp {
 	steerAngle: number;
 	velocity: Vector3Mp;
 
-	explode(...args: any[]): void; // TODO
+	explode(): void;
 	getColour(): number;
 	getColourRGB(): number[];
 	getMod(...args: any[]): void; // TODO
 	getNeonColour(): number[];
-	getOccupant(...args: any[]): PlayerMp; // TODO
-	getOccupants(...args: any[]): PlayerMp[]; // TODO
+	getOccupant(seat: number): PlayerMp;
+	getOccupants(): PlayerMp[];
 	getPaint(...args: any[]): void; // TODO
 	repair(): void;
-	setColour(...args: any[]): void; // TODO
+	setColour(primary: number, secondary: number): void;
 	setColourRGB(red1: number, green1: number, blue1: number, red2: number, green2: number, blue2: number): void;
-	setMod(...args: any[]): void; // TODO
+	setMod(modType: number, modIndex: number): void;
 	setNeonColour(red: number, green: number, blue: number): void;
 	setPaint(...args: any[]): void; // TODO
-	setOccupant(...args: any[]): void; // TODO
-	spawn(...args: any[]): void; // TODO
+	setOccupant(seat: number, player: PlayerMp): void;
+	spawn(position: Vector3Mp, heading: number): void;
 }
 
 interface EventMp extends EntityMpPool<null> {
@@ -159,7 +159,7 @@ interface MarkerMp extends EntityMp {
 }
 
 interface ColshapeMp extends EntityMp {
-	shapeType: string;
+	readonly shapeType: ColshapeTypeMp;
 
 	isPointWithin(point: Vector3Mp): boolean;
 }
@@ -281,7 +281,27 @@ declare const enum VehicleSeatMp {
 	Passenger3 = 3
 }
 
-declare const enum EventKeysMp {
+declare const enum EntityTypeMp {
+	player = "player",
+	vehicle = "vehicle",
+	object = "object",
+	pickup = "pickup",
+	blip = "blip",
+	checkpoint = "checkpoint",
+	marker = "marker",
+	colshape = "colshape"
+}
+
+declare const enum ColshapeTypeMp {
+	sphere = "sphere",
+	tube = "tube",
+	circle = "circle",
+	polygon = "polygon",
+	cuboid = "cuboid",
+	rectangle = "rectangle"
+}
+
+declare const enum EventKeyMp {
 	playerJoin = "playerJoin",
 	playerQuit = "playerQuit",
 	playerDeath = "playerDeath",

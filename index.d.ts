@@ -51,13 +51,23 @@ interface PlayerMp extends EntityMp {
 
 	ban(reason: string): void;
 	call(eventName: string, ...args: any[]): void;
-	getClothes(component: ClothesComponentMp): { 
-		readonly drawable: number, 
+	getClothes(component: ClothesComponentMp): {
+		readonly drawable: number,
 		readonly texture: number,
-		readonly palette: number };
+		readonly palette: number
+	};
 	getFaceFeature(index: number): number;
-	getHeadBlend(...args: any[]): void; // TODO
-	getProp(prop: PlayerPropMp): { readonly drawable: number, readonly texture: number };
+	getHeadBlend(): {
+		readonly shapes: number[],
+		readonly skins: number[],
+		readonly shapeMix: number,
+		readonly skinMix: number,
+		readonly thirdMix: number
+	};
+	getProp(prop: PlayerPropMp): {
+		readonly drawable: number,
+		readonly texture: number
+	};
 	giveWeapon(weaponHash: number, ammo: number): void;
 	giveWeapon(weaponHashes: number[], ammo: number): void;
 	invoke(hash: string, ...args: any[]): void;
@@ -96,19 +106,19 @@ interface VehicleMp extends EntityMp {
 	velocity: Vector3Mp;
 
 	explode(): void;
-	getColour(): number;
+	getColour(id: number): number; // id: 0 - primary, 1 - secondary
 	getColourRGB(): number[];
-	getMod(...args: any[]): void; // TODO
+	getMod(modType: number): number;
 	getNeonColour(): number[];
 	getOccupant(seat: number): PlayerMp;
 	getOccupants(): PlayerMp[];
-	getPaint(...args: any[]): void; // TODO
+	getPaint(id: number): number; // id: 0 - primary, 1 - secondary
 	repair(): void;
 	setColour(primary: number, secondary: number): void;
 	setColourRGB(red1: number, green1: number, blue1: number, red2: number, green2: number, blue2: number): void;
 	setMod(modType: number, modIndex: number): void;
 	setNeonColour(red: number, green: number, blue: number): void;
-	setPaint(...args: any[]): void; // TODO
+	setPaint(primaryType: number, primaryColour: number, secondaryType: number, secondaryColour: number): void;
 	setOccupant(seat: number, player: PlayerMp): void;
 	spawn(position: Vector3Mp, heading: number): void;
 }
@@ -131,8 +141,10 @@ interface BlipMp extends EntityMp {
 	radius: number;
 	scale: number;
 
-	routeFor(player: PlayerMp): void;
+	routeFor(player: PlayerMp | undefined, colour: number, scale: number): void;
+	routeFor(players: PlayerMp[] | undefined, colour: number, scale: number): void;
 	unrouteFor(player: PlayerMp): void;
+	unrouteFor(players: PlayerMp[]): void;
 }
 
 interface CheckpointMp extends EntityMp {
@@ -168,6 +180,7 @@ interface EntityMpPool<TEntity> {
 	readonly length: number;
 	readonly size: number;
 
+	apply(fn: (...args: any[]) => void, ...args: any[]): void;
 	at(id: number): TEntity;
 	exists(entity: TEntity): boolean;
 	forEach(entity: (entity: TEntity) => void): void;
@@ -200,17 +213,15 @@ interface PickupMpPool extends EntityMpPool<PickupMp> {
 
 interface BlipMpPool extends EntityMpPool<BlipMp> {
 	"new"(model: number, position: Vector3Mp): BlipMp;
-	"new"(model: number, position: Vector3Mp, radius: number): BlipMp;
-	"new"(model: number, entityToAttachTo: EntityMp): BlipMp;
+	"new"(model: number, position: Vector3Mp, radius: number, dimension?: number): BlipMp;
+	newStreamed(model: number, position: Vector3Mp, radius: number, dimension?: number): BlipMp;
 }
 
 interface CheckpointMpPool extends EntityMpPool<CheckpointMp> {
 	"new"(type: number, position: Vector3Mp, direction: Vector3Mp, radius: number,
-		red: number, green: number, blue: number, alpha: number, visible: boolean): CheckpointMp;
+		red: number, green: number, blue: number, alpha: number, visible: boolean, dimension?: number): CheckpointMp;
 	"new"(type: number, position: Vector3Mp, direction: Vector3Mp, radius: number,
 		red: number, green: number, blue: number, alpha: number, dimension: number): CheckpointMp;
-	"new"(type: number, position: Vector3Mp, direction: Vector3Mp, radius: number,
-		red: number, green: number, blue: number, alpha: number, visible: boolean, dimension: number): CheckpointMp;
 }
 
 interface MarkerMpPool extends EntityMpPool<MarkerMp> {

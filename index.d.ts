@@ -52,21 +52,21 @@ interface PlayerMp extends EntityMp {
 	ban(reason: string): void;
 	call(eventName: string, ...args: any[]): void;
 	getClothes(component: ClothesComponentMp): {
-		readonly drawable: number,
-		readonly texture: number,
-		readonly palette: number
+		drawable: number,
+		texture: number,
+		palette: number
 	};
 	getFaceFeature(index: number): number;
 	getHeadBlend(): {
-		readonly shapes: number[],
-		readonly skins: number[],
-		readonly shapeMix: number,
-		readonly skinMix: number,
-		readonly thirdMix: number
+		shapes: number[],
+		skins: number[],
+		shapeMix: number,
+		skinMix: number,
+		thirdMix: number
 	};
 	getProp(prop: PlayerPropMp): {
-		readonly drawable: number,
-		readonly texture: number
+		drawable: number,
+		texture: number
 	};
 	giveWeapon(weaponHash: number, ammo: number): void;
 	giveWeapon(weaponHashes: number[], ammo: number): void;
@@ -249,7 +249,11 @@ interface EventMpPool extends EntityMpPool<EventMp> {
 
 interface EnvironmentMp {
 	weather: string;
-	time: { hour: number, minute: number, second: number };
+	time: { 
+		hour: number,
+		minute: number,
+		second: number
+	};
 
 	setWeatherTransition(weather: string): void;
 	setWeatherTransition(weather: string, duration: number): void;

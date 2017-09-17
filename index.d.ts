@@ -113,6 +113,7 @@ interface VehicleMp extends EntityMp {
 	getOccupant(seat: number): PlayerMp;
 	getOccupants(): PlayerMp[];
 	getPaint(id: number): number; // id: 0 - primary, 1 - secondary
+	playScenario(scenario: string): void;
 	repair(): void;
 	setColour(primary: number, secondary: number): void;
 	setColourRGB(red1: number, green1: number, blue1: number, red2: number, green2: number, blue2: number): void;
@@ -121,6 +122,7 @@ interface VehicleMp extends EntityMp {
 	setPaint(primaryType: number, primaryColour: number, secondaryType: number, secondaryColour: number): void;
 	setOccupant(seat: number, player: PlayerMp): void;
 	spawn(position: Vector3Mp, heading: number): void;
+	stopAnimation(): void;
 }
 
 interface EventMp extends EntityMpPool<null> {

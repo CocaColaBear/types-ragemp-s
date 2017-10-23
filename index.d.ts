@@ -46,6 +46,7 @@ interface PlayerMp extends EntityMp {
 	readonly isLeavingVehicle: boolean;
 	readonly ping: number;
 	readonly seat: VehicleSeatMp;
+	readonly streamedPlayers: PlayerMp[];
 	readonly weapon: number;
 	readonly vehicle: VehicleMp;
 
@@ -70,6 +71,7 @@ interface PlayerMp extends EntityMp {
 	};
 	giveWeapon(weaponHash: number, ammo: number): void;
 	giveWeapon(weaponHashes: number[], ammo: number): void;
+	isStreamedFor(player: PlayerMp): Boolean;
 	invoke(hash: string, ...args: any[]): void;
 	kick(reason: string): void;
 	notify(message: string): void;
@@ -77,6 +79,9 @@ interface PlayerMp extends EntityMp {
 	playAnimation(dict: string, name: string, speed: number, flag: number): void;
 	putIntoVehicle(vehicle: VehicleMp, seat: VehicleSeatMp): void;
 	removeFromVehicle(): void;
+	removeWeapon(weaponHash: number): void;
+	removeWeapon(weaponHashes: number[]): void;
+	removeWeapons(): void;
 	setClothes(component: ClothesComponentMp, drawable: number, texture: number, palette: number): void;
 	setFaceFeature(index: number, scale: number): void;
 	setHairColour(firstColour: number, secondColour: number): void;
@@ -104,6 +109,7 @@ interface VehicleMp extends EntityMp {
 	siren: boolean;
 	steerAngle: number;
 	velocity: Vector3Mp;
+	readonly trailer: VehicleMp;
 
 	explode(): void;
 	getColour(id: number): number; // id: 0 - primary, 1 - secondary
@@ -113,6 +119,7 @@ interface VehicleMp extends EntityMp {
 	getOccupant(seat: number): PlayerMp;
 	getOccupants(): PlayerMp[];
 	getPaint(id: number): number; // id: 0 - primary, 1 - secondary
+	isStreamedFor(player: PlayerMp): Boolean;
 	playScenario(scenario: string): void;
 	repair(): void;
 	setColour(primary: number, secondary: number): void;
@@ -245,7 +252,7 @@ interface ColshapeMpPool extends EntityMpPool<ColshapeMp> {
 
 interface EventMpPool extends EntityMpPool<EventMp> {
 	add(eventName: EventKeyMp | string, callback: (...args: any[]) => void): void;
-	add(events: ({ [name: string]: (...args: any[]) => void; }[])): void;
+	add(events: ({ [name: string]: (...args: any[]) => void; })): void;
 	addCommand(commandName: string, callback: (player: PlayerMp, fullText: string, ...args: string[]) => void): void;
 	call(eventName: string, ...args: any[]): void;
 }
@@ -320,6 +327,7 @@ declare const enum ColshapeTypeMp {
 }
 
 declare const enum EventKeyMp {
+	entityCreated = "entityCreated",
 	playerJoin = "playerJoin",
 	playerQuit = "playerQuit",
 	playerDeath = "playerDeath",
@@ -333,7 +341,12 @@ declare const enum EventKeyMp {
 	playerEnterCheckpoint = "playerEnterCheckpoint",
 	playerExitCheckpoint = "playerExitCheckpoint",
 	playerEnterColshape = "playerEnterColshape",
-	playerExitColshape = "playerExitColshape"
+	playerExitColshape = "playerExitColshape",
+	vehicleAttachTrailer = "vehicleAttachTrailer",
+	playerStreamIn = "playerStreamIn",
+	playerStreamOut = "playerStreamOut",
+	vehicleStreamIn = "vehicleStreamIn",
+	vehicleStreamOut = "vehicleStreamOut"
 }
 
 declare var mp: Mp;

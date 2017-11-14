@@ -147,7 +147,7 @@ interface PickupMp extends EntityMp {
 interface BlipMp extends EntityMp {
 	colour: number;
 	name: string;
-	radius: number;
+	drawRange: number;
 	scale: number;
 
 	routeFor(player: PlayerMp | undefined, colour: number, scale: number): void;

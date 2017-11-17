@@ -52,7 +52,7 @@ interface PlayerMp extends EntityMp {
 
 	ban(reason: string): void;
 	call(eventName: string, ...args: any[]): void;
-	getClothes(component: ClothesComponentMp): {
+	getClothes(component: ClothesComponentMp | number): {
 		drawable: number,
 		texture: number,
 		palette: number
@@ -65,7 +65,7 @@ interface PlayerMp extends EntityMp {
 		skinMix: number,
 		thirdMix: number
 	};
-	getProp(prop: PlayerPropMp): {
+	getProp(prop: PlayerPropMp | number): {
 		drawable: number,
 		texture: number
 	};
@@ -77,17 +77,17 @@ interface PlayerMp extends EntityMp {
 	notify(message: string): void;
 	outputChatBox(message: string): void;
 	playAnimation(dict: string, name: string, speed: number, flag: number): void;
-	putIntoVehicle(vehicle: VehicleMp, seat: VehicleSeatMp): void;
+	putIntoVehicle(vehicle: VehicleMp, seat: VehicleSeatMp | number): void;
 	removeFromVehicle(): void;
 	removeWeapon(weaponHash: number): void;
 	removeWeapon(weaponHashes: number[]): void;
 	removeWeapons(): void;
-	setClothes(component: ClothesComponentMp, drawable: number, texture: number, palette: number): void;
+	setClothes(component: ClothesComponentMp | number, drawable: number, texture: number, palette: number): void;
 	setFaceFeature(index: number, scale: number): void;
 	setHairColour(firstColour: number, secondColour: number): void;
 	setHeadBlend(shapeFirstId: number, shapeSecondId: number, shapeThirdId: number, skinFirstId: number, skinSecondId: number,
 		skinThirdId: number, shapeMix: number, skinMix: number, thirdMix: number): void;
-	setProp(prop: PlayerPropMp, drawable: number, texture: number): void;
+	setProp(prop: PlayerPropMp | number, drawable: number, texture: number): void;
 	spawn(position: Vector3Mp): void;
 	updateHeadBlend(shapeMix: number, skinMix: number, thirdMix: number): void;
 }

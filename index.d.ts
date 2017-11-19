@@ -30,8 +30,6 @@ interface EntityMp {
 interface PlayerMp extends EntityMp {
 	armour: number;
 	eyeColour: number;
-	hairColour: number;
-	hairHighlightColour: number;
 	heading: number;
 	health: number;
 	name: string;
@@ -44,6 +42,8 @@ interface PlayerMp extends EntityMp {
 	readonly isInCover: boolean;
 	readonly isJumping: boolean;
 	readonly isLeavingVehicle: boolean;
+	readonly hairColour: number;
+	readonly hairHighlightColour: number;
 	readonly ping: number;
 	readonly seat: VehicleSeatMp;
 	readonly streamedPlayers: PlayerMp[];

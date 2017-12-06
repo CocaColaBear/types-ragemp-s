@@ -1,58 +1,141 @@
+// -------------------------------------------------------------------------
+// Custom types
+// -------------------------------------------------------------------------
+
+type HashOrString = number | string;
+type RGB = [ number, number, number ];
+type RGBA = [ number, number, number, number ];
+
+// -------------------------------------------------------------------------
+// Main MP type
+// -------------------------------------------------------------------------
+
 interface Mp {
 	blips: BlipMpPool;
 	checkpoints: CheckpointMpPool;
 	colshapes: ColshapeMpPool;
 	environment: EnvironmentMp;
 	events: EventMpPool;
+	labels: TextLabelMpPool;
 	markers: MarkerMpPool;
 	pickups: PickupMpPool;
 	players: PlayerMpPool;
 	objects: ObjectMpPool;
 	vehicles: VehicleMpPool;
 
+	Event: { 
+		"new"(eventName: EnumsMp.EventKey | string, callback: (...args: any[]) => void): EventMp 
+	};
 	Vector3: Vector3Mp;
 
 	joaat(str: string): number;
 	joaat(strs: string[]): number[];
 }
 
+// -------------------------------------------------------------------------
+// Entity MP types
+// -------------------------------------------------------------------------
+
+interface BlipMp extends EntityMp {
+	color: number;
+	name: string;
+	drawDistance: number;
+	rotation: number;
+	scale: number;
+	shortRange: number;
+	sprite: number;
+
+	routeFor(player: PlayerMp | undefined, color: number, scale: number): void;
+	routeFor(players: PlayerMp[] | undefined, color: number, scale: number): void;
+	unrouteFor(player: PlayerMp): void;
+	unrouteFor(players: PlayerMp[]): void;
+}
+
+interface CheckpointMp extends EntityMp {
+	color: number;
+	destination: Vector3Mp;
+	radius: number;
+	visible: boolean;
+
+	getColor(): number[];
+	hideFor(player: PlayerMp): void;
+	setColor(red: number, green: number, blue: number, alpha: number): void;
+	showFor(player: PlayerMp): void;
+}
+
+interface ColshapeMp extends EntityMp {
+	readonly shapeType: EnumsMp.ColshapeType;
+
+	isPointWithin(point: Vector3Mp): boolean;
+}
+
 interface EntityMp {
 	alpha: number;
+	data: any;
 	dimension: number;
 	model: number;
 	position: Vector3Mp;
 	readonly id: number;
-	readonly type: EntityTypeMp;
+	readonly type: EnumsMp.EntityType;
 	
+	getVariable(name: string): any | undefined;
 	destroy(): void;
+	setVariable(name: string, value: any): void;
+}
+
+interface MarkerMp extends EntityMp {
+	direction: Vector3Mp;
+	scale: number;
+	visible: boolean;
+
+	getColor(): number[];
+	hideFor(player: PlayerMp): void;
+	setColor(red: number, green: number, blue: number, alpha: number): void;
+	showFor(player: PlayerMp): void;
+}
+
+interface ObjectMp extends EntityMp {
+	rotation: Vector3Mp;
+}
+
+interface PickupMp extends EntityMp {
+	pickupHash: number;
 }
 
 interface PlayerMp extends EntityMp {
 	armour: number;
-	eyeColour: number;
+	currentWeapon: number;
+	currentWeaponAmmo: number;
+	eyeColor: number;
 	heading: number;
 	health: number;
 	name: string;
-	readonly aimTarget: PlayerMp;
 	readonly action: string;
+	readonly aimTarget: PlayerMp;
+	readonly allWeapons: HashOrString[]; // TODO: ???
 	readonly ip: string;
 	readonly isAiming: boolean;
 	readonly isClimbing: boolean;
 	readonly isEnteringVehicle: boolean;
 	readonly isInCover: boolean;
+	readonly isInMelee: boolean;
 	readonly isJumping: boolean;
 	readonly isLeavingVehicle: boolean;
-	readonly hairColour: number;
-	readonly hairHighlightColour: number;
+	readonly isOnLadder: boolean;
+	readonly isReloading: boolean;
+	readonly hairColor: number;
+	readonly hairHighlightColor: number;
+	readonly packetLoss: number;
 	readonly ping: number;
-	readonly seat: VehicleSeatMp;
+	readonly seat: EnumsMp.VehicleSeat;
+	readonly socialClubName: string;
 	readonly streamedPlayers: PlayerMp[];
-	readonly weapon: number;
+	readonly weapons: PlayerWeaponCollection;
 	readonly vehicle: VehicleMp;
 
 	ban(reason: string): void;
 	call(eventName: string, ...args: any[]): void;
-	getClothes(component: ClothesComponentMp | number): {
+	getClothes(component: EnumsMp.ClothesComponent | number): {
 		drawable: number,
 		texture: number,
 		palette: number
@@ -65,31 +148,43 @@ interface PlayerMp extends EntityMp {
 		skinMix: number,
 		thirdMix: number
 	};
-	getProp(prop: PlayerPropMp | number): {
+	getHeadOverlay(index: number): {
+
+	}
+	getProp(prop: EnumsMp.PlayerProp | number): {
 		drawable: number,
 		texture: number
 	};
+	getWeaponAmmo(weapon: HashOrString): number;
 	giveWeapon(weaponHash: number, ammo: number): void;
 	giveWeapon(weaponHashes: number[], ammo: number): void;
-	isStreamedFor(player: PlayerMp): Boolean;
+	isStreamed(player: PlayerMp): boolean;
 	invoke(hash: string, ...args: any[]): void;
 	kick(reason: string): void;
 	notify(message: string): void;
 	outputChatBox(message: string): void;
 	playAnimation(dict: string, name: string, speed: number, flag: number): void;
-	putIntoVehicle(vehicle: VehicleMp, seat: VehicleSeatMp | number): void;
+	putIntoVehicle(vehicle: VehicleMp, seat: EnumsMp.VehicleSeat | number): void;
 	removeFromVehicle(): void;
 	removeWeapon(weaponHash: number): void;
-	removeWeapon(weaponHashes: number[]): void;
-	removeWeapons(): void;
-	setClothes(component: ClothesComponentMp | number, drawable: number, texture: number, palette: number): void;
+	removeAllWeapons(): void;
+	setClothes(component: EnumsMp.ClothesComponent | number, drawable: number, texture: number, palette: number): void;
 	setFaceFeature(index: number, scale: number): void;
-	setHairColour(firstColour: number, secondColour: number): void;
+	setHairColor(firstColor: number, secondColor: number): void;
 	setHeadBlend(shapeFirstId: number, shapeSecondId: number, shapeThirdId: number, skinFirstId: number, skinSecondId: number,
 		skinThirdId: number, shapeMix: number, skinMix: number, thirdMix: number): void;
-	setProp(prop: PlayerPropMp | number, drawable: number, texture: number): void;
+	setHeadOverlay(index: number, overlayId: number, opacity: number): void;
+	setProp(prop: EnumsMp.PlayerProp | number, drawable: number, texture: number): void;
+	setWeaponAmmo(weapon: HashOrString, ammo: number): void;
 	spawn(position: Vector3Mp): void;
 	updateHeadBlend(shapeMix: number, skinMix: number, thirdMix: number): void;
+}
+
+interface TextLabelMp extends EntityMp {
+	color: RGB;
+	drawDistance: number;
+	los: boolean;
+	text: string;
 }
 
 interface VehicleMp extends EntityMp {
@@ -97,93 +192,78 @@ interface VehicleMp extends EntityMp {
 	brake: boolean;
 	engine: boolean;
 	engineHealth: number;
+	dashboardColor: any; // TODO: ???
 	dead: boolean;
 	highbeams: boolean;
 	horn: boolean;
+	livery: number; // TODO: ???
 	locked: boolean;
 	neonEnabled: boolean;
 	numberPlate: string;
-	position: Vector3Mp;
+	numberPlateType: any; // TODO: ???
+	pearlescentColor: any; // TODO: ???
 	rocketBoost: boolean;
 	rotation: Vector3Mp;
 	siren: boolean;
 	steerAngle: number;
+	taxiLights: boolean;
+	trimColor: any; // TODO: ???
 	velocity: Vector3Mp;
+	wheelColor: any; // TODO: ???
+	wheelType: any; // TODO: ???
+	windowTint: number; // TODO: ???
+	readonly extras: any; // TODO: ???
+	readonly mods: any; // TODO: ???
+	readonly streamedPlayers: PlayerMp[];
 	readonly trailer: VehicleMp;
+	readonly traileredBy: VehicleMp;
 
 	explode(): void;
-	getColour(id: number): number; // id: 0 - primary, 1 - secondary
-	getColourRGB(): number[];
+	getColor(id: number): number; // id: 0 - primary, 1 - secondary
+	getColorRGB(): number[];
+	getExtra(index: number): any; // TODO: ???
 	getMod(modType: number): number;
-	getNeonColour(): number[];
+	getNeonColor(): number[];
 	getOccupant(seat: number): PlayerMp;
 	getOccupants(): PlayerMp[];
 	getPaint(id: number): number; // id: 0 - primary, 1 - secondary
-	isStreamedFor(player: PlayerMp): Boolean;
+	isStreamed(player: PlayerMp): boolean;
 	playScenario(scenario: string): void;
 	repair(): void;
-	setColour(primary: number, secondary: number): void;
-	setColourRGB(red1: number, green1: number, blue1: number, red2: number, green2: number, blue2: number): void;
+	setColor(primary: number, secondary: number): void;
+	setColorRGB(red1: number, green1: number, blue1: number, red2: number, green2: number, blue2: number): void;
+	setExtra(index: number, extra: any): void; // TODO: ???
 	setMod(modType: number, modIndex: number): void;
-	setNeonColour(red: number, green: number, blue: number): void;
-	setPaint(primaryType: number, primaryColour: number, secondaryType: number, secondaryColour: number): void;
+	setNeonColor(red: number, green: number, blue: number): void;
+	setPaint(primaryType: number, primaryColor: number, secondaryType: number, secondaryColor: number): void;
 	setOccupant(seat: number, player: PlayerMp): void;
 	spawn(position: Vector3Mp, heading: number): void;
 	stopAnimation(): void;
 }
 
-interface EventMp extends EntityMpPool<null> {
-	
+// -------------------------------------------------------------------------
+// Simple MP types
+// -------------------------------------------------------------------------
+
+interface EnvironmentMp {
+	weather: EnumsMp.Weather | string;
+	time: { 
+		hour: number,
+		minute: number,
+		second: number
+	};
+
+	setWeatherTransition(weather: EnumsMp.Weather | string): void;
+	setWeatherTransition(weather: EnumsMp.Weather | string, duration: number): void;
 }
 
-interface ObjectMp extends EntityMp {
-	rotation: Vector3Mp;
+interface EventMp {
+	destroy(): void;
 }
 
-interface PickupMp extends EntityMp {
-	pickupHash: number;
-}
-
-interface BlipMp extends EntityMp {
-	colour: number;
-	name: string;
-	drawRange: number;
-	scale: number;
-
-	routeFor(player: PlayerMp | undefined, colour: number, scale: number): void;
-	routeFor(players: PlayerMp[] | undefined, colour: number, scale: number): void;
-	unrouteFor(player: PlayerMp): void;
-	unrouteFor(players: PlayerMp[]): void;
-}
-
-interface CheckpointMp extends EntityMp {
-	colour: number;
-	destination: Vector3Mp;
-	radius: number;
-	visible: boolean;
-
-	getColour(): number[];
-	hideFor(player: PlayerMp): void;
-	setColour(red: number, green: number, blue: number, alpha: number): void;
-	showFor(player: PlayerMp): void;
-}
-
-interface MarkerMp extends EntityMp {
-	direction: Vector3Mp;
-	scale: number;
-	visible: boolean;
-
-	getColour(): number[];
-	hideFor(player: PlayerMp): void;
-	setColour(red: number, green: number, blue: number, alpha: number): void;
-	showFor(player: PlayerMp): void;
-}
-
-interface ColshapeMp extends EntityMp {
-	readonly shapeType: ColshapeTypeMp;
-
-	isPointWithin(point: Vector3Mp): boolean;
-}
+// -------------------------------------------------------------------------
+// Pool MP types
+// -------------------------------------------------------------------------
 
 interface EntityMpPool<TEntity> {
 	readonly length: number;
@@ -209,11 +289,22 @@ interface PlayerMpPool extends EntityMpPool<PlayerMp> {
 }
 
 interface VehicleMpPool extends EntityMpPool<VehicleMp> {
-	"new"(vehicleHash: number, position: Vector3Mp, heading: number, dimension?: number): VehicleMp;
+	"new"(model: HashOrString, position: Vector3Mp, options?: {
+		alpha: number,
+		color: RGB,
+		dimension: number,
+		heading: number;
+		locked: boolean,
+		numberPlate: string
+	}): VehicleMp;
 }
 
 interface ObjectMpPool extends EntityMpPool<ObjectMp> {
-	"new"(objectHash: number, position: Vector3Mp, rotation: Vector3Mp): ObjectMp;
+	"new"(model: HashOrString, position: Vector3Mp, options?: {
+		alpha: number,
+		dimension: number,
+		rotation: Vector3Mp
+	}): ObjectMp;
 }
 
 interface PickupMpPool extends EntityMpPool<PickupMp> {
@@ -221,25 +312,35 @@ interface PickupMpPool extends EntityMpPool<PickupMp> {
 }
 
 interface BlipMpPool extends EntityMpPool<BlipMp> {
-	"new"(model: number, position: Vector3Mp): BlipMp;
-	"new"(model: number, position: Vector3Mp, radius: number, dimension?: number): BlipMp;
-	newStreamed(model: number, position: Vector3Mp, radius: number, dimension?: number): BlipMp;
+	"new"(sprite: number, position: Vector3Mp, options?: {
+		alpha: number,
+		color: number,
+		dimension: number,
+		drawDistance: number,
+		name: string,
+		rotation: number,
+		scale: number,
+		shortRange: number
+	}): BlipMp;
 }
 
 interface CheckpointMpPool extends EntityMpPool<CheckpointMp> {
-	"new"(type: number, position: Vector3Mp, direction: Vector3Mp, radius: number,
-		red: number, green: number, blue: number, alpha: number, visible: boolean, dimension?: number): CheckpointMp;
-	"new"(type: number, position: Vector3Mp, direction: Vector3Mp, radius: number,
-		red: number, green: number, blue: number, alpha: number, dimension: number): CheckpointMp;
+	"new"(type: number, position: Vector3Mp, radius: number, options?: {
+		color: RGBA, // TODO: ??? alpha
+		dimension: number,
+		direction: Vector3Mp,
+		visible: boolean
+	}): CheckpointMp;
 }
 
 interface MarkerMpPool extends EntityMpPool<MarkerMp> {
-	"new"(type: number, position: Vector3Mp, rotation: Vector3Mp, direction: Vector3Mp, radius: number,
-		red: number, green: number, blue: number, alpha: number, visible: boolean): MarkerMp;
-	"new"(type: number, position: Vector3Mp, rotation: Vector3Mp, direction: Vector3Mp, radius: number,
-		red: number, green: number, blue: number, alpha: number, dimension: number): MarkerMp;
-	"new"(type: number, position: Vector3Mp, rotation: Vector3Mp, direction: Vector3Mp, radius: number,
-		red: number, green: number, blue: number, alpha: number, visible: boolean, dimension: number): MarkerMp;
+	"new"(type: number, position: Vector3Mp, scale: number, options?: {
+		color: RGBA, // TODO: ??? alpha
+		dimension: number,
+		direction: Vector3Mp,
+		rotation: Vector3Mp,
+		visible: boolean
+	}): MarkerMp;
 }
 
 interface ColshapeMpPool extends EntityMpPool<ColshapeMp> {
@@ -250,24 +351,30 @@ interface ColshapeMpPool extends EntityMpPool<ColshapeMp> {
 	newTube(x: number, y: number, z: number, range: number, height: number): ColshapeMp;
 }
 
-interface EventMpPool extends EntityMpPool<EventMp> {
-	add(eventName: EventKeyMp | string, callback: (...args: any[]) => void): void;
+interface TextLabelMpPool extends EntityMpPool<TextLabelMp> {
+	"new"(text: string, position: Vector3Mp, options?: {
+		los: boolean,
+		color: RGB,
+		dimension: number,
+		drawDistance: number,
+		font: any, // TODO: ???
+	}): TextLabelMp;
+}
+
+interface EventMpPool {
+	add(eventName: EnumsMp.EventKey | string, callback: (...args: any[]) => void): void;
 	add(events: ({ [name: string]: (...args: any[]) => void; })): void;
 	addCommand(commandName: string, callback: (player: PlayerMp, fullText: string, ...args: string[]) => void): void;
 	call(eventName: string, ...args: any[]): void;
+	getAllOf(eventName: string): EventMp[];
+	remove(eventName: string, handler?: (...args: any[]) => void): void;
+	remove(eventNames: string[]): void;
+	reset(): void;
 }
 
-interface EnvironmentMp {
-	weather: string;
-	time: { 
-		hour: number,
-		minute: number,
-		second: number
-	};
-
-	setWeatherTransition(weather: string): void;
-	setWeatherTransition(weather: string, duration: number): void;
-}
+// -------------------------------------------------------------------------
+// Additional MP types
+// -------------------------------------------------------------------------
 
 interface Vector3Mp {
 	new(x: number, y: number, z: number): Vector3Mp;
@@ -277,76 +384,152 @@ interface Vector3Mp {
 	z: number;
 }
 
-declare const enum ClothesComponentMp {
-	Head = 0,
-	Beard = 1,
-	Hair = 2,
-	Torso = 3,
-	Legs = 4,
-	Hands = 5,
-	Foot = 6,
-	None = 7,
-	Accessories1 = 8,
-	Accessories2 = 9,
-	Mask = 10,
-	Decals = 11,
-	Auxiliary = 12
+interface PlayerWeaponCollection {
+	current: number;
+
+	reset(): void;
 }
 
-declare const enum PlayerPropMp {
-	Helmet = 0,
-	Glasses = 1,
-	EarAccessory = 2
+// -------------------------------------------------------------------------
+// Enums
+// -------------------------------------------------------------------------
+
+declare namespace EnumsMp {
+	const enum EventKey {
+		entityCreated = "entityCreated",
+		entityModelChange = "entityModelChange",
+		playerChat = "playerChat",
+		playerCommand = "playerCommand",
+		playerDamage = "playerDamage",
+		playerDeath = "playerDeath",
+		playerEnterCheckpoint = "playerEnterCheckpoint",
+		playerEnterColshape = "playerEnterColshape",
+		playerEnterVehicle = "playerEnterVehicle",
+		playerExitCheckpoint = "playerExitCheckpoint",
+		playerExitColshape = "playerExitColshape",
+		playerExitVehicle = "playerExitVehicle",
+		playerJoin = "playerJoin",
+		playerMarkWaypoint = "playerMarkWaypoint",
+		playerQuit = "playerQuit",
+		playerReachWaypoint = "playerReachWaypoint",
+		playerReady = "playerReady",
+		playerSpawn = "playerSpawn",
+		playerStartEnterVehicle = "playerStartEnterVehicle",
+		playerStartExitVehicle = "playerStartExitVehicle",
+		playerStreamIn = "playerStreamIn",
+		playerStreamOut = "playerStreamOut",
+		playerWeaponChange = "playerWeaponChange",
+		vehicleAttachTrailer = "vehicleAttachTrailer",
+		vehicleDamage = "vehicleDamage",
+		vehicleHornToggle = "vehicleHornToggle",
+		vehicleSirenToggle = "vehicleSirenToggle",
+		vehicleStreamIn = "vehicleStreamIn",
+		vehicleStreamOut = "vehicleStreamOut",
+		vehicleTrailerAttach = "vehicleTrailerAttach"
+	}
+
+	const enum ClothesComponent {
+		Head = 0,
+		Beard = 1,
+		Hair = 2,
+		Torso = 3,
+		Legs = 4,
+		Hands = 5,
+		Foot = 6,
+		None = 7,
+		Accessories1 = 8,
+		Accessories2 = 9,
+		Mask = 10,
+		Decals = 11,
+		Auxiliary = 12
+	}
+
+	const enum ColshapeType {
+		sphere = "sphere",
+		tube = "tube",
+		circle = "circle",
+		polygon = "polygon",
+		cuboid = "cuboid",
+		rectangle = "rectangle"
+	}
+
+	const enum EntityType {
+		player = "player",
+		vehicle = "vehicle",
+		object = "object",
+		pickup = "pickup",
+		blip = "blip",
+		checkpoint = "checkpoint",
+		marker = "marker",
+		colshape = "colshape"
+	}
+
+	const enum Marker {
+		UpsideDownCone = 0,
+		VerticalCylinder = 1,
+		ThickCevronUp = 2,
+		ThinCevronUp = 3,
+		CheckeredFlagRect = 4,
+		CheckeredFlagCircle = 5,
+		VerticalCircle = 6,
+		PlaneModel = 7,
+		LostMCDark = 8,
+		LostMCLight = 9,
+		Number0 = 10,
+		Number1 = 11,
+		Number2 = 12,
+		Number3 = 13,
+		Number4 = 14,
+		Number5 = 15,
+		Number6 = 16,
+		Number7 = 17,
+		Number8 = 18,
+		Number9 = 19,
+		ChevronUpX1 = 20,
+		ChevronUpX2 = 21,
+		ChevronUpX3 = 22,
+		HorizontalCircleFlat = 23,
+		ReplayIcon = 24,
+		HorizontalCircleSkinny = 25,
+		HorizontalCircleArrow = 26,
+		HorizontalSplitArrowCircle = 27,
+		DebugSphere = 28,
+		DollorSign = 29,
+		HorizontalBars = 30,
+		WolfHead = 31
+	}
+
+	const enum PlayerProp {
+		Helmet = 0,
+		Glasses = 1,
+		EarAccessory = 2
+	}
+
+	const enum VehicleSeat {
+		Driver = 0,
+		Passenger1 = 1,
+		Passenger2 = 2,
+		Passenger3 = 3
+	}
+
+	const enum Weather {
+		Blizzard = "BLIZZARD",
+		Clear = "CLEAR",
+		Clearing = "CLEARING",
+		Clouds = "CLOUDS",
+		ExtraSunny = "EXTRASUNNY",
+		Foggy = "FOGGY",
+		Overcast = "OVERCAST",
+		Rain = "RAIN",
+		Smog = "SMOG",
+		SnowLight = "SNOWLIGHT",
+		Thunder = "THUNDER",
+		Xmas = "XMAS"
+	}
 }
 
-declare const enum VehicleSeatMp {
-	Driver = 0,
-	Passenger1 = 1,
-	Passenger2 = 2,
-	Passenger3 = 3
-}
-
-declare const enum EntityTypeMp {
-	player = "player",
-	vehicle = "vehicle",
-	object = "object",
-	pickup = "pickup",
-	blip = "blip",
-	checkpoint = "checkpoint",
-	marker = "marker",
-	colshape = "colshape"
-}
-
-declare const enum ColshapeTypeMp {
-	sphere = "sphere",
-	tube = "tube",
-	circle = "circle",
-	polygon = "polygon",
-	cuboid = "cuboid",
-	rectangle = "rectangle"
-}
-
-declare const enum EventKeyMp {
-	entityCreated = "entityCreated",
-	playerJoin = "playerJoin",
-	playerQuit = "playerQuit",
-	playerDeath = "playerDeath",
-	playerSpawn = "playerSpawn",
-	playerChat = "playerChat",
-	playerCommand = "playerCommand",
-	playerEnterVehicle = "playerEnterVehicle",
-	playerEnteredVehicle = "playerEnteredVehicle",
-	playerExitVehicle = "playerExitVehicle",
-	playerLeftVehicle = "playerLeftVehicle",
-	playerEnterCheckpoint = "playerEnterCheckpoint",
-	playerExitCheckpoint = "playerExitCheckpoint",
-	playerEnterColshape = "playerEnterColshape",
-	playerExitColshape = "playerExitColshape",
-	vehicleAttachTrailer = "vehicleAttachTrailer",
-	playerStreamIn = "playerStreamIn",
-	playerStreamOut = "playerStreamOut",
-	vehicleStreamIn = "vehicleStreamIn",
-	vehicleStreamOut = "vehicleStreamOut"
-}
+// -------------------------------------------------------------------------
+// Vars
+// -------------------------------------------------------------------------
 
 declare var mp: Mp;

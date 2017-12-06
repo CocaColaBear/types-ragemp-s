@@ -192,36 +192,36 @@ interface VehicleMp extends EntityMp {
 	brake: boolean;
 	engine: boolean;
 	engineHealth: number;
-	dashboardColor: any; // TODO: ???
+	dashboardColor: number;
 	dead: boolean;
 	highbeams: boolean;
 	horn: boolean;
-	livery: number; // TODO: ???
+	livery: number;
 	locked: boolean;
 	neonEnabled: boolean;
 	numberPlate: string;
-	numberPlateType: any; // TODO: ???
-	pearlescentColor: any; // TODO: ???
+	numberPlateType: number;
+	pearlescentColor: number;
 	rocketBoost: boolean;
 	rotation: Vector3Mp;
 	siren: boolean;
 	steerAngle: number;
 	taxiLights: boolean;
-	trimColor: any; // TODO: ???
+	trimColor: number;
 	velocity: Vector3Mp;
-	wheelColor: any; // TODO: ???
-	wheelType: any; // TODO: ???
-	windowTint: number; // TODO: ???
-	readonly extras: any; // TODO: ???
-	readonly mods: any; // TODO: ???
+	wheelColor: number;
+	wheelType: number;
+	windowTint: number;
+	readonly extras: boolean[];
+	readonly mods: number[];
 	readonly streamedPlayers: PlayerMp[];
 	readonly trailer: VehicleMp;
 	readonly traileredBy: VehicleMp;
 
 	explode(): void;
 	getColor(id: number): number; // id: 0 - primary, 1 - secondary
-	getColorRGB(): number[];
-	getExtra(index: number): any; // TODO: ???
+	getColorRGB(): RGB;
+	getExtra(index: number): boolean;
 	getMod(modType: number): number;
 	getNeonColor(): number[];
 	getOccupant(seat: number): PlayerMp;
@@ -232,7 +232,7 @@ interface VehicleMp extends EntityMp {
 	repair(): void;
 	setColor(primary: number, secondary: number): void;
 	setColorRGB(red1: number, green1: number, blue1: number, red2: number, green2: number, blue2: number): void;
-	setExtra(index: number, extra: any): void; // TODO: ???
+	setExtra(index: number, value: boolean): void;
 	setMod(modType: number, modIndex: number): void;
 	setNeonColor(red: number, green: number, blue: number): void;
 	setPaint(primaryType: number, primaryColor: number, secondaryType: number, secondaryColor: number): void;
@@ -265,6 +265,36 @@ interface EventMp {
 // Pool MP types
 // -------------------------------------------------------------------------
 
+interface BlipMpPool extends EntityMpPool<BlipMp> {
+	"new"(sprite: number, position: Vector3Mp, options?: {
+		alpha?: number,
+		color?: number,
+		dimension?: number,
+		drawDistance?: number,
+		name?: string,
+		rotation?: number,
+		scale?: number,
+		shortRange?: number
+	}): BlipMp;
+}
+
+interface CheckpointMpPool extends EntityMpPool<CheckpointMp> {
+	"new"(type: number, position: Vector3Mp, radius: number, options?: {
+		color?: RGBA,
+		dimension?: number,
+		direction?: Vector3Mp,
+		visible?	: boolean
+	}): CheckpointMp;
+}
+
+interface ColshapeMpPool extends EntityMpPool<ColshapeMp> {
+	newCircle(x: number, y: number, range: number): ColshapeMp;
+	newCuboid(x: number, y: number, z: number, width: number, depth: number, height: number): ColshapeMp;
+	newRectangle(x: number, y: number, width: number, height: number): ColshapeMp;
+	newSphere(x: number, y: number, z: number, range: number): ColshapeMp;
+	newTube(x: number, y: number, z: number, range: number, height: number): ColshapeMp;
+}
+
 interface EntityMpPool<TEntity> {
 	readonly length: number;
 	readonly size: number;
@@ -278,6 +308,39 @@ interface EntityMpPool<TEntity> {
 	toArray(): TEntity[];
 }
 
+interface EventMpPool {
+	add(eventName: EnumsMp.EventKey | string, callback: (...args: any[]) => void): void;
+	add(events: ({ [name: string]: (...args: any[]) => void; })): void;
+	addCommand(commandName: string, callback: (player: PlayerMp, fullText: string, ...args: string[]) => void): void;
+	call(eventName: string, ...args: any[]): void;
+	getAllOf(eventName: string): EventMp[];
+	remove(eventName: string, handler?: (...args: any[]) => void): void;
+	remove(eventNames: string[]): void;
+	reset(): void;
+}
+
+interface MarkerMpPool extends EntityMpPool<MarkerMp> {
+	"new"(type: number, position: Vector3Mp, scale: number, options?: {
+		color?: RGBA,
+		dimension?: number,
+		direction?: Vector3Mp,
+		rotation?: Vector3Mp,
+		visible?: boolean
+	}): MarkerMp;
+}
+
+interface ObjectMpPool extends EntityMpPool<ObjectMp> {
+	"new"(model: HashOrString, position: Vector3Mp, options?: {
+		alpha?: number,
+		dimension?: number,
+		rotation?: Vector3Mp
+	}): ObjectMp;
+}
+
+interface PickupMpPool extends EntityMpPool<PickupMp> {
+	"new"(...args: any[]): PickupMp; // TODO
+}
+
 interface PlayerMpPool extends EntityMpPool<PlayerMp> {
 	broadcast(text: string): void;
 	broadcastInRange(position: Vector3Mp, range: number, text: string): void;
@@ -288,88 +351,26 @@ interface PlayerMpPool extends EntityMpPool<PlayerMp> {
 	callInRange(eventName: string, ...args: any[]): void;
 }
 
-interface VehicleMpPool extends EntityMpPool<VehicleMp> {
-	"new"(model: HashOrString, position: Vector3Mp, options?: {
-		alpha: number,
-		color: RGB,
-		dimension: number,
-		heading: number;
-		locked: boolean,
-		numberPlate: string
-	}): VehicleMp;
-}
-
-interface ObjectMpPool extends EntityMpPool<ObjectMp> {
-	"new"(model: HashOrString, position: Vector3Mp, options?: {
-		alpha: number,
-		dimension: number,
-		rotation: Vector3Mp
-	}): ObjectMp;
-}
-
-interface PickupMpPool extends EntityMpPool<PickupMp> {
-	"new"(...args: any[]): PickupMp; // TODO
-}
-
-interface BlipMpPool extends EntityMpPool<BlipMp> {
-	"new"(sprite: number, position: Vector3Mp, options?: {
-		alpha: number,
-		color: number,
-		dimension: number,
-		drawDistance: number,
-		name: string,
-		rotation: number,
-		scale: number,
-		shortRange: number
-	}): BlipMp;
-}
-
-interface CheckpointMpPool extends EntityMpPool<CheckpointMp> {
-	"new"(type: number, position: Vector3Mp, radius: number, options?: {
-		color: RGBA, // TODO: ??? alpha
-		dimension: number,
-		direction: Vector3Mp,
-		visible: boolean
-	}): CheckpointMp;
-}
-
-interface MarkerMpPool extends EntityMpPool<MarkerMp> {
-	"new"(type: number, position: Vector3Mp, scale: number, options?: {
-		color: RGBA, // TODO: ??? alpha
-		dimension: number,
-		direction: Vector3Mp,
-		rotation: Vector3Mp,
-		visible: boolean
-	}): MarkerMp;
-}
-
-interface ColshapeMpPool extends EntityMpPool<ColshapeMp> {
-	newCircle(x: number, y: number, range: number): ColshapeMp;
-	newCuboid(x: number, y: number, z: number, width: number, depth: number, height: number): ColshapeMp;
-	newRectangle(x: number, y: number, width: number, height: number): ColshapeMp;
-	newSphere(x: number, y: number, z: number, range: number): ColshapeMp;
-	newTube(x: number, y: number, z: number, range: number, height: number): ColshapeMp;
-}
-
 interface TextLabelMpPool extends EntityMpPool<TextLabelMp> {
 	"new"(text: string, position: Vector3Mp, options?: {
-		los: boolean,
-		color: RGB,
-		dimension: number,
-		drawDistance: number,
-		font: any, // TODO: ???
+		color?: RGBA,
+		dimension?: number,
+		drawDistance?: number,
+		font?: number,
+		los?: boolean
 	}): TextLabelMp;
 }
 
-interface EventMpPool {
-	add(eventName: EnumsMp.EventKey | string, callback: (...args: any[]) => void): void;
-	add(events: ({ [name: string]: (...args: any[]) => void; })): void;
-	addCommand(commandName: string, callback: (player: PlayerMp, fullText: string, ...args: string[]) => void): void;
-	call(eventName: string, ...args: any[]): void;
-	getAllOf(eventName: string): EventMp[];
-	remove(eventName: string, handler?: (...args: any[]) => void): void;
-	remove(eventNames: string[]): void;
-	reset(): void;
+interface VehicleMpPool extends EntityMpPool<VehicleMp> {
+	"new"(model: HashOrString, position: Vector3Mp, options?: {
+		alpha?: number,
+		color?: [ [number, number] | RGB, [number, number] | RGB ],
+		dimension?: number,
+		engine: boolean,
+		heading?: number;
+		locked?: boolean,
+		numberPlate?: string
+	}): VehicleMp;
 }
 
 // -------------------------------------------------------------------------

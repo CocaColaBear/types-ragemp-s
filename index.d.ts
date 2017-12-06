@@ -366,7 +366,7 @@ interface VehicleMpPool extends EntityMpPool<VehicleMp> {
 		alpha?: number,
 		color?: [ [number, number] | RGB, [number, number] | RGB ],
 		dimension?: number,
-		engine: boolean,
+		engine?: boolean,
 		heading?: number;
 		locked?: boolean,
 		numberPlate?: string

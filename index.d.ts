@@ -24,7 +24,7 @@ interface Mp {
 	vehicles: VehicleMpPool;
 
 	Event: { 
-		"new"(eventName: EnumsMp.EventKey | string, callback: (...args: any[]) => void): EventMp 
+		new(eventName: EnumsMp.EventKey | string, callback: (...args: any[]) => void): EventMp 
 	};
 	Vector3: Vector3Mp;
 

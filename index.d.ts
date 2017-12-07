@@ -42,7 +42,7 @@ interface BlipMp extends EntityMp {
 	drawDistance: number;
 	rotation: number;
 	scale: number;
-	shortRange: number;
+	shortRange: boolean;
 	sprite: number;
 
 	routeFor(player: PlayerMp | undefined, color: number, scale: number): void;
@@ -274,7 +274,7 @@ interface BlipMpPool extends EntityMpPool<BlipMp> {
 		name?: string,
 		rotation?: number,
 		scale?: number,
-		shortRange?: number
+		shortRange?: boolean
 	}): BlipMp;
 }
 

@@ -112,7 +112,7 @@ interface PlayerMp extends EntityMp {
 	name: string;
 	readonly action: string;
 	readonly aimTarget: PlayerMp;
-	readonly allWeapons: HashOrString[]; // TODO: ???
+	readonly allWeapons: number[];
 	readonly ip: string;
 	readonly isAiming: boolean;
 	readonly isClimbing: boolean;
@@ -364,7 +364,7 @@ interface TextLabelMpPool extends EntityMpPool<TextLabelMp> {
 interface VehicleMpPool extends EntityMpPool<VehicleMp> {
 	"new"(model: HashOrString, position: Vector3Mp, options?: {
 		alpha?: number,
-		color?: [ [number, number] | RGB, [number, number] | RGB ],
+		color?: [ [number, number], [number, number] ] | [ RGB, RGB ],
 		dimension?: number,
 		engine?: boolean,
 		heading?: number;

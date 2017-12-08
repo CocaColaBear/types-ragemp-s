@@ -148,7 +148,7 @@ interface PlayerMp extends EntityMp {
 		skinMix: number,
 		thirdMix: number
 	};
-	getHeadOverlay(overlay: EnumsMp.HeadOverlay | number): [ number, number ]; // TODO: return number or [ number, number ] ?
+	getHeadOverlay(overlay: EnumsMp.HeadOverlay | number): [ number, number ];
 	getProp(prop: EnumsMp.PlayerProp | number): {
 		drawable: number,
 		texture: number
@@ -171,7 +171,7 @@ interface PlayerMp extends EntityMp {
 	setHairColor(firstColor: number, secondColor: number): void;
 	setHeadBlend(shapeFirstId: number, shapeSecondId: number, shapeThirdId: number, skinFirstId: number, skinSecondId: number,
 		skinThirdId: number, shapeMix: number, skinMix: number, thirdMix: number): void;
-	setHeadOverlay(overlay: EnumsMp.HeadOverlay | number, index: number, opacity: number): void;
+	setHeadOverlay(overlay: EnumsMp.HeadOverlay | number, value: [ number, number ]): void;
 	setProp(prop: EnumsMp.PlayerProp | number, drawable: number, texture: number): void;
 	setWeaponAmmo(weapon: HashOrString, ammo: number): void;
 	spawn(position: Vector3Mp): void;

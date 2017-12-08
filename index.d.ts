@@ -148,9 +148,7 @@ interface PlayerMp extends EntityMp {
 		skinMix: number,
 		thirdMix: number
 	};
-	getHeadOverlay(index: number): {
-
-	}
+	getHeadOverlay(overlay: EnumsMp.HeadOverlay | number): [ number, number ]; // TODO: return number or [ number, number ] ?
 	getProp(prop: EnumsMp.PlayerProp | number): {
 		drawable: number,
 		texture: number
@@ -173,7 +171,7 @@ interface PlayerMp extends EntityMp {
 	setHairColor(firstColor: number, secondColor: number): void;
 	setHeadBlend(shapeFirstId: number, shapeSecondId: number, shapeThirdId: number, skinFirstId: number, skinSecondId: number,
 		skinThirdId: number, shapeMix: number, skinMix: number, thirdMix: number): void;
-	setHeadOverlay(index: number, overlayId: number, opacity: number): void;
+	setHeadOverlay(overlay: EnumsMp.HeadOverlay | number, index: number, opacity: number): void;
 	setProp(prop: EnumsMp.PlayerProp | number, drawable: number, texture: number): void;
 	setWeaponAmmo(weapon: HashOrString, ammo: number): void;
 	spawn(position: Vector3Mp): void;
@@ -463,6 +461,22 @@ declare namespace EnumsMp {
 		checkpoint = "checkpoint",
 		marker = "marker",
 		colshape = "colshape"
+	}
+
+	const enum HeadOverlay {
+		Blemishes = 0,
+		FacialHair = 1,
+		Eyebrows = 2,
+		Ageing = 3,
+		Makeup = 4,
+		Blush = 5,
+		Complexion = 6,
+		SunDamage = 7,
+		Lipstick = 8,
+		Freckles = 9,
+		ChestHair = 10,
+		BodyBlemishes = 11,
+		AddBodyBlemishes = 12
 	}
 
 	const enum Marker {

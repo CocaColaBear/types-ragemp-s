@@ -14,7 +14,6 @@ interface Mp {
 	blips: BlipMpPool;
 	checkpoints: CheckpointMpPool;
 	colshapes: ColshapeMpPool;
-	environment: EnvironmentMp;
 	events: EventMpPool;
 	labels: TextLabelMpPool;
 	markers: MarkerMpPool;
@@ -22,6 +21,7 @@ interface Mp {
 	players: PlayerMpPool;
 	objects: ObjectMpPool;
 	vehicles: VehicleMpPool;
+	world: WorldMp;
 
 	Event: { 
 		new(eventName: EnumsMp.EventKey | string, callback: (...args: any[]) => void): EventMp 
@@ -243,7 +243,7 @@ interface VehicleMp extends EntityMp {
 // Simple MP types
 // -------------------------------------------------------------------------
 
-interface EnvironmentMp {
+interface WorldMp {
 	weather: EnumsMp.Weather | string;
 	time: { 
 		hour: number,
@@ -251,8 +251,9 @@ interface EnvironmentMp {
 		second: number
 	};
 
-	setWeatherTransition(weather: EnumsMp.Weather | string): void;
-	setWeatherTransition(weather: EnumsMp.Weather | string, duration: number): void;
+	removeIpl(name: string): void;
+	requestIpl(name: string): void;
+	setWeatherTransition(weather: EnumsMp.Weather | string, duration?: number): void;
 }
 
 interface EventMp {

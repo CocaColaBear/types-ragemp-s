@@ -6,7 +6,7 @@
 Run this through command promt:
 
 ``` bash
-npm install --save-dev github:CocaColaBear/types-ragemp#master
+npm install --save-dev github:CocaColaBear/types-ragemp#dp2
 ```
 
 That's all, now you can use ragemp types!

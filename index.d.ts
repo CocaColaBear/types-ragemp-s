@@ -163,9 +163,10 @@ interface PlayerMp extends EntityMp {
 	outputChatBox(message: string): void;
 	playAnimation(dict: string, name: string, speed: number, flag: number): void;
 	putIntoVehicle(vehicle: VehicleMp, seat: EnumsMp.VehicleSeat | number): void;
-	removeFromVehicle(): void;
-	removeWeapon(weaponHash: number): void;
 	removeAllWeapons(): void;
+	removeFromVehicle(): void;
+	removeObject(object: any): void; // TODO
+	removeWeapon(weaponHash: number): void;
 	setClothes(component: EnumsMp.ClothesComponent | number, drawable: number, texture: number, palette: number): void;
 	setFaceFeature(index: number, scale: number): void;
 	setHairColor(firstColor: number, secondColor: number): void;
@@ -196,6 +197,7 @@ interface VehicleMp extends EntityMp {
 	horn: boolean;
 	livery: number;
 	locked: boolean;
+	movable: boolean;
 	neonEnabled: boolean;
 	numberPlate: string;
 	numberPlateType: number;
@@ -249,6 +251,10 @@ interface WorldMp {
 		hour: number,
 		minute: number,
 		second: number
+	};
+	trafficLights: {
+		locked: boolean,
+		state: number;
 	};
 
 	removeIpl(name: string): void;

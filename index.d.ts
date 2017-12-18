@@ -104,12 +104,12 @@ interface PickupMp extends EntityMp {
 
 interface PlayerMp extends EntityMp {
 	armour: number;
-	currentWeapon: number;
-	currentWeaponAmmo: number;
 	eyeColor: number;
 	heading: number;
 	health: number;
 	name: string;
+	weapon: number;
+	weaponAmmo: number;
 	readonly action: string;
 	readonly aimTarget: PlayerMp;
 	readonly allWeapons: number[];

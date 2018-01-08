@@ -78,8 +78,8 @@ interface EntityMp {
 	readonly id: number;
 	readonly type: EnumsMp.EntityType;
 	
-	getVariable(name: string): any | undefined;
 	destroy(): void;
+	getVariable(name: string): any | undefined;
 	setVariable(name: string, value: any): void;
 }
 

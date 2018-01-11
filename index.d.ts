@@ -213,7 +213,9 @@ interface VehicleMp extends EntityMp {
 	wheelType: number;
 	windowTint: number;
 	readonly extras: boolean[];
+	readonly heading: number;
 	readonly mods: number[];
+	readonly quaternion: Quaternion,
 	readonly streamedPlayers: PlayerMp[];
 	readonly trailer: VehicleMp;
 	readonly traileredBy: VehicleMp;
@@ -394,6 +396,13 @@ interface PlayerWeaponCollection {
 	current: number;
 
 	reset(): void;
+}
+
+type Quaternion = {
+	x: number;
+	y: number;
+	z: number;
+	w: number;
 }
 
 // -------------------------------------------------------------------------

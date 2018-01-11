@@ -384,7 +384,7 @@ interface VehicleMpPool extends EntityMpPool<VehicleMp> {
 // Additional MP types
 // -------------------------------------------------------------------------
 
-interface Vector3Mp {
+type Vector3Mp = {
 	new(x: number, y: number, z: number): Vector3Mp;
 
 	x: number;
@@ -392,7 +392,7 @@ interface Vector3Mp {
 	z: number;
 }
 
-interface PlayerWeaponCollection {
+type PlayerWeaponCollection = {
 	current: number;
 
 	reset(): void;

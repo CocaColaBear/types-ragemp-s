@@ -130,7 +130,7 @@ interface PlayerMp extends EntityMp {
 	readonly seat: EnumsMp.VehicleSeat;
 	readonly socialClubName: string;
 	readonly streamedPlayers: PlayerMp[];
-	readonly weapons: PlayerWeaponCollection;
+	readonly weapons: PlayerWeaponCollectionMp;
 	readonly vehicle: VehicleMp;
 
 	ban(reason: string): void;
@@ -215,7 +215,7 @@ interface VehicleMp extends EntityMp {
 	readonly extras: boolean[];
 	readonly heading: number;
 	readonly mods: number[];
-	readonly quaternion: Quaternion,
+	readonly quaternion: QuaternionMp,
 	readonly streamedPlayers: PlayerMp[];
 	readonly trailer: VehicleMp;
 	readonly traileredBy: VehicleMp;
@@ -307,11 +307,11 @@ interface EntityMpPool<TEntity> {
 	readonly size: number;
 
 	apply(fn: (...args: any[]) => void, ...args: any[]): void;
-	at(id: number): TEntity;
+	at(index: number): TEntity;
 	exists(entity: TEntity): boolean;
-	forEach(entity: (entity: TEntity) => void): void;
-	forEachInRange(position: Vector3Mp, range: number, entity: (entity: TEntity) => void): void;
-	forEachInDimension(position: Vector3Mp, range: number, dimension: number, entity: (entity: TEntity) => void): void;
+	forEach(fn: (entity: TEntity) => void): void;
+	forEachInRange(position: Vector3Mp, range: number, fn: (entity: TEntity) => void): void;
+	forEachInDimension(position: Vector3Mp, range: number, dimension: number, fn: (entity: TEntity) => void): void;
 	toArray(): TEntity[];
 }
 
@@ -392,13 +392,13 @@ type Vector3Mp = {
 	z: number;
 }
 
-type PlayerWeaponCollection = {
+type PlayerWeaponCollectionMp = {
 	current: number;
 
 	reset(): void;
 }
 
-type Quaternion = {
+type QuaternionMp = {
 	x: number;
 	y: number;
 	z: number;

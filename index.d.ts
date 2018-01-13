@@ -128,7 +128,7 @@ interface PlayerMp extends EntityMp {
 	readonly packetLoss: number;
 	readonly ping: number;
 	readonly seat: EnumsMp.VehicleSeat;
-	readonly socialClubName: string;
+	readonly socialClub: string;
 	readonly streamedPlayers: PlayerMp[];
 	readonly weapons: PlayerWeaponCollectionMp;
 	readonly vehicle: VehicleMp;

@@ -10,7 +10,7 @@ type RGBA = [ number, number, number, number ];
 // Main MP type
 // -------------------------------------------------------------------------
 
-interface Mp {
+type Mp = {
 	blips: BlipMpPool;
 	checkpoints: CheckpointMpPool;
 	colshapes: ColshapeMpPool;
@@ -24,7 +24,7 @@ interface Mp {
 	world: WorldMp;
 
 	Event: { 
-		new(eventName: EnumsMp.EventKey | string, callback: (...args: any[]) => void): EventMp 
+		new(eventName: RageEnums.EventKey | string, callback: (...args: any[]) => void): EventMp 
 	};
 	Vector3: Vector3Mp;
 
@@ -64,7 +64,7 @@ interface CheckpointMp extends EntityMp {
 }
 
 interface ColshapeMp extends EntityMp {
-	readonly shapeType: EnumsMp.ColshapeType;
+	readonly shapeType: RageEnums.ColshapeType;
 
 	isPointWithin(point: Vector3Mp): boolean;
 }
@@ -76,10 +76,12 @@ interface EntityMp {
 	model: number;
 	position: Vector3Mp;
 	readonly id: number;
-	readonly type: EnumsMp.EntityType;
+	readonly type: RageEnums.EntityType;
 	
 	getVariable(name: string): any | undefined;
 	destroy(): void;
+	dist(position: Vector3Mp): number;
+	distSquared(position: Vector3Mp): number;
 	setVariable(name: string, value: any): void;
 }
 
@@ -127,7 +129,7 @@ interface PlayerMp extends EntityMp {
 	readonly hairHighlightColor: number;
 	readonly packetLoss: number;
 	readonly ping: number;
-	readonly seat: EnumsMp.VehicleSeat;
+	readonly seat: RageEnums.VehicleSeat;
 	readonly socialClub: string;
 	readonly streamedPlayers: PlayerMp[];
 	readonly weapons: PlayerWeaponCollectionMp;
@@ -135,7 +137,7 @@ interface PlayerMp extends EntityMp {
 
 	ban(reason: string): void;
 	call(eventName: string, ...args: any[]): void;
-	getClothes(component: EnumsMp.ClothesComponent | number): {
+	getClothes(component: RageEnums.ClothesComponent | number): {
 		drawable: number,
 		texture: number,
 		palette: number
@@ -148,8 +150,8 @@ interface PlayerMp extends EntityMp {
 		skinMix: number,
 		thirdMix: number
 	};
-	getHeadOverlay(overlay: EnumsMp.HeadOverlay | number): [ number, number ];
-	getProp(prop: EnumsMp.PlayerProp | number): {
+	getHeadOverlay(overlay: RageEnums.HeadOverlay | number): [ number, number ];
+	getProp(prop: RageEnums.PlayerProp | number): {
 		drawable: number,
 		texture: number
 	};
@@ -162,18 +164,18 @@ interface PlayerMp extends EntityMp {
 	notify(message: string): void;
 	outputChatBox(message: string): void;
 	playAnimation(dict: string, name: string, speed: number, flag: number): void;
-	putIntoVehicle(vehicle: VehicleMp, seat: EnumsMp.VehicleSeat | number): void;
+	putIntoVehicle(vehicle: VehicleMp, seat: RageEnums.VehicleSeat | number): void;
 	removeAllWeapons(): void;
 	removeFromVehicle(): void;
 	removeObject(object: any): void; // TODO
 	removeWeapon(weaponHash: number): void;
-	setClothes(component: EnumsMp.ClothesComponent | number, drawable: number, texture: number, palette: number): void;
+	setClothes(component: RageEnums.ClothesComponent | number, drawable: number, texture: number, palette: number): void;
 	setFaceFeature(index: number, scale: number): void;
 	setHairColor(firstColor: number, secondColor: number): void;
 	setHeadBlend(shapeFirstId: number, shapeSecondId: number, shapeThirdId: number, skinFirstId: number, skinSecondId: number,
 		skinThirdId: number, shapeMix: number, skinMix: number, thirdMix: number): void;
-	setHeadOverlay(overlay: EnumsMp.HeadOverlay | number, value: [ number, number ]): void;
-	setProp(prop: EnumsMp.PlayerProp | number, drawable: number, texture: number): void;
+	setHeadOverlay(overlay: RageEnums.HeadOverlay | number, value: [ number, number ]): void;
+	setProp(prop: RageEnums.PlayerProp | number, drawable: number, texture: number): void;
 	setWeaponAmmo(weapon: HashOrString, ammo: number): void;
 	spawn(position: Vector3Mp): void;
 	updateHeadBlend(shapeMix: number, skinMix: number, thirdMix: number): void;
@@ -248,7 +250,7 @@ interface VehicleMp extends EntityMp {
 // -------------------------------------------------------------------------
 
 interface WorldMp {
-	weather: EnumsMp.Weather | string;
+	weather: RageEnums.Weather | string;
 	time: { 
 		hour: number,
 		minute: number,
@@ -261,7 +263,7 @@ interface WorldMp {
 
 	removeIpl(name: string): void;
 	requestIpl(name: string): void;
-	setWeatherTransition(weather: EnumsMp.Weather | string, duration?: number): void;
+	setWeatherTransition(weather: RageEnums.Weather | string, duration?: number): void;
 }
 
 interface EventMp {
@@ -316,7 +318,7 @@ interface EntityMpPool<TEntity> {
 }
 
 interface EventMpPool {
-	add(eventName: EnumsMp.EventKey | string, callback: (...args: any[]) => void): void;
+	add(eventName: RageEnums.EventKey | string, callback: (...args: any[]) => void): void;
 	add(events: ({ [name: string]: (...args: any[]) => void; })): void;
 	addCommand(commandName: string, callback: (player: PlayerMp, fullText: string, ...args: string[]) => void): void;
 	call(eventName: string, ...args: any[]): void;
@@ -412,160 +414,6 @@ type QuaternionMp = {
 interface Function {
 	cancel: boolean;
 	handler: EventMp;
-}
-
-// -------------------------------------------------------------------------
-// Enums
-// -------------------------------------------------------------------------
-
-declare namespace EnumsMp {
-	const enum EventKey {
-		entityCreated = "entityCreated",
-		entityModelChange = "entityModelChange",
-		playerChat = "playerChat",
-		playerCommand = "playerCommand",
-		playerDamage = "playerDamage",
-		playerDeath = "playerDeath",
-		playerEnterCheckpoint = "playerEnterCheckpoint",
-		playerEnterColshape = "playerEnterColshape",
-		playerEnterVehicle = "playerEnterVehicle",
-		playerExitCheckpoint = "playerExitCheckpoint",
-		playerExitColshape = "playerExitColshape",
-		playerExitVehicle = "playerExitVehicle",
-		playerJoin = "playerJoin",
-		playerMarkWaypoint = "playerMarkWaypoint",
-		playerQuit = "playerQuit",
-		playerReachWaypoint = "playerReachWaypoint",
-		playerReady = "playerReady",
-		playerSpawn = "playerSpawn",
-		playerStartEnterVehicle = "playerStartEnterVehicle",
-		playerStartExitVehicle = "playerStartExitVehicle",
-		playerStreamIn = "playerStreamIn",
-		playerStreamOut = "playerStreamOut",
-		playerWeaponChange = "playerWeaponChange",
-		vehicleAttachTrailer = "vehicleAttachTrailer",
-		vehicleDamage = "vehicleDamage",
-		vehicleHornToggle = "vehicleHornToggle",
-		vehicleSirenToggle = "vehicleSirenToggle",
-		vehicleStreamIn = "vehicleStreamIn",
-		vehicleStreamOut = "vehicleStreamOut",
-		vehicleTrailerAttach = "vehicleTrailerAttach"
-	}
-
-	const enum ClothesComponent {
-		Head = 0,
-		Beard = 1,
-		Hair = 2,
-		Torso = 3,
-		Legs = 4,
-		Hands = 5,
-		Foot = 6,
-		None = 7,
-		Accessories1 = 8,
-		Accessories2 = 9,
-		Mask = 10,
-		Decals = 11,
-		Auxiliary = 12
-	}
-
-	const enum ColshapeType {
-		sphere = "sphere",
-		tube = "tube",
-		circle = "circle",
-		polygon = "polygon",
-		cuboid = "cuboid",
-		rectangle = "rectangle"
-	}
-
-	const enum EntityType {
-		player = "player",
-		vehicle = "vehicle",
-		object = "object",
-		pickup = "pickup",
-		blip = "blip",
-		checkpoint = "checkpoint",
-		marker = "marker",
-		colshape = "colshape"
-	}
-
-	const enum HeadOverlay {
-		Blemishes = 0,
-		FacialHair = 1,
-		Eyebrows = 2,
-		Ageing = 3,
-		Makeup = 4,
-		Blush = 5,
-		Complexion = 6,
-		SunDamage = 7,
-		Lipstick = 8,
-		Freckles = 9,
-		ChestHair = 10,
-		BodyBlemishes = 11,
-		AddBodyBlemishes = 12
-	}
-
-	const enum Marker {
-		UpsideDownCone = 0,
-		VerticalCylinder = 1,
-		ThickCevronUp = 2,
-		ThinCevronUp = 3,
-		CheckeredFlagRect = 4,
-		CheckeredFlagCircle = 5,
-		VerticalCircle = 6,
-		PlaneModel = 7,
-		LostMCDark = 8,
-		LostMCLight = 9,
-		Number0 = 10,
-		Number1 = 11,
-		Number2 = 12,
-		Number3 = 13,
-		Number4 = 14,
-		Number5 = 15,
-		Number6 = 16,
-		Number7 = 17,
-		Number8 = 18,
-		Number9 = 19,
-		ChevronUpX1 = 20,
-		ChevronUpX2 = 21,
-		ChevronUpX3 = 22,
-		HorizontalCircleFlat = 23,
-		ReplayIcon = 24,
-		HorizontalCircleSkinny = 25,
-		HorizontalCircleArrow = 26,
-		HorizontalSplitArrowCircle = 27,
-		DebugSphere = 28,
-		DollorSign = 29,
-		HorizontalBars = 30,
-		WolfHead = 31
-	}
-
-	const enum PlayerProp {
-		Helmet = 0,
-		Glasses = 1,
-		EarAccessory = 2
-	}
-
-	const enum VehicleSeat {
-		Driver = 0,
-		Passenger1 = 1,
-		Passenger2 = 2,
-		Passenger3 = 3
-	}
-
-	const enum Weather {
-		Blizzard = "BLIZZARD",
-		Clear = "CLEAR",
-		Clearing = "CLEARING",
-		Clouds = "CLOUDS",
-		ExtraSunny = "EXTRASUNNY",
-		Foggy = "FOGGY",
-		Overcast = "OVERCAST",
-		Rain = "RAIN",
-		Smog = "SMOG",
-		SnowLight = "SNOWLIGHT",
-		Thunder = "THUNDER",
-		Xmas = "XMAS"
-	}
 }
 
 // -------------------------------------------------------------------------

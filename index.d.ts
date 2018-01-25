@@ -1,4 +1,4 @@
-import { RageEnums } from "./enums";
+/// <reference path="enums.d.ts" />
 
 // -------------------------------------------------------------------------
 // Custom types

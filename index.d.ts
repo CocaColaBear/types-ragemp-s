@@ -422,4 +422,4 @@ interface Function {
 // Vars
 // -------------------------------------------------------------------------
 
-declare var mp: Mp;
+declare const mp: Mp;

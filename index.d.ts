@@ -7,6 +7,8 @@
 type HashOrString = number | string;
 type RGB = [ number, number, number ];
 type RGBA = [ number, number, number, number ];
+type Array3d = [ number, number, number ];
+type Array2d = [ number, number ];
 
 // -------------------------------------------------------------------------
 // Main MP type
@@ -152,7 +154,7 @@ interface PlayerMp extends EntityMp {
 		skinMix: number,
 		thirdMix: number
 	};
-	getHeadOverlay(overlay: RageEnums.HeadOverlay | number): [ number, number ];
+	getHeadOverlay(overlay: RageEnums.HeadOverlay | number): Array2d;
 	getProp(prop: RageEnums.PlayerProp | number): {
 		drawable: number,
 		texture: number
@@ -176,7 +178,7 @@ interface PlayerMp extends EntityMp {
 	setHairColor(firstColor: number, secondColor: number): void;
 	setHeadBlend(shapeFirstId: number, shapeSecondId: number, shapeThirdId: number, skinFirstId: number, skinSecondId: number,
 		skinThirdId: number, shapeMix: number, skinMix: number, thirdMix: number): void;
-	setHeadOverlay(overlay: RageEnums.HeadOverlay | number, value: [ number, number ]): void;
+	setHeadOverlay(overlay: RageEnums.HeadOverlay | number, value: Array2d): void;
 	setProp(prop: RageEnums.PlayerProp | number, drawable: number, texture: number): void;
 	setWeaponAmmo(weapon: HashOrString, ammo: number): void;
 	spawn(position: Vector3Mp): void;
@@ -375,7 +377,7 @@ interface TextLabelMpPool extends EntityMpPool<TextLabelMp> {
 interface VehicleMpPool extends EntityMpPool<VehicleMp> {
 	"new"(model: HashOrString, position: Vector3Mp, options?: {
 		alpha?: number,
-		color?: [ [number, number], [number, number] ] | [ RGB, RGB ],
+		color?: [ Array2d, Array2d ] | [ RGB, RGB ],
 		dimension?: number,
 		engine?: boolean,
 		heading?: number;

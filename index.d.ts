@@ -7,8 +7,9 @@
 type HashOrString = number | string;
 type RGB = [ number, number, number ];
 type RGBA = [ number, number, number, number ];
-type Array3d = [ number, number, number ];
 type Array2d = [ number, number ];
+type Array3d = [ number, number, number ];
+type Array4d = [ number, number, number, number ];
 
 // -------------------------------------------------------------------------
 // Main MP type
@@ -146,6 +147,7 @@ interface PlayerMp extends EntityMp {
 		texture: number,
 		palette: number
 	};
+	getDecoration(collection: number): number;
 	getFaceFeature(index: number): number;
 	getHeadBlend(): {
 		shapes: number[],
@@ -154,7 +156,7 @@ interface PlayerMp extends EntityMp {
 		skinMix: number,
 		thirdMix: number
 	};
-	getHeadOverlay(overlay: RageEnums.HeadOverlay | number): Array2d;
+	getHeadOverlay(overlay: RageEnums.HeadOverlay | number): Array4d;
 	getProp(prop: RageEnums.PlayerProp | number): {
 		drawable: number,
 		texture: number
@@ -174,11 +176,12 @@ interface PlayerMp extends EntityMp {
 	removeObject(object: any): void; // TODO
 	removeWeapon(weaponHash: number): void;
 	setClothes(component: RageEnums.ClothesComponent | number, drawable: number, texture: number, palette: number): void;
+	setDecoration(collection: number, overlay: number): void;
 	setFaceFeature(index: number, scale: number): void;
 	setHairColor(firstColor: number, secondColor: number): void;
 	setHeadBlend(shapeFirstId: number, shapeSecondId: number, shapeThirdId: number, skinFirstId: number, skinSecondId: number,
 		skinThirdId: number, shapeMix: number, skinMix: number, thirdMix: number): void;
-	setHeadOverlay(overlay: RageEnums.HeadOverlay | number, value: Array2d): void;
+	setHeadOverlay(overlay: RageEnums.HeadOverlay | number, value: Array4d): void;
 	setProp(prop: RageEnums.PlayerProp | number, drawable: number, texture: number): void;
 	setWeaponAmmo(weapon: HashOrString, ammo: number): void;
 	spawn(position: Vector3Mp): void;

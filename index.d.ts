@@ -176,11 +176,15 @@ interface PlayerMp extends EntityMp {
 	removeObject(object: any): void; // TODO
 	removeWeapon(weaponHash: number): void;
 	setClothes(component: RageEnums.ClothesComponent | number, drawable: number, texture: number, palette: number): void;
+	setCustomization(gender: boolean,	shapeFirst: number, shapeSecond: number, shapeThird: number, skinFirst: number,
+		skinSecond: number, skinThird: number, shapeMix: number, skinMix: number, thirdMix: number, eyeColor: number,
+		hairColor: number, hightlightColor: number, faceFeatures: number[]
+	): void;
 	setDecoration(collection: number, overlay: number): void;
 	setFaceFeature(index: number, scale: number): void;
 	setHairColor(firstColor: number, secondColor: number): void;
-	setHeadBlend(shapeFirstId: number, shapeSecondId: number, shapeThirdId: number, skinFirstId: number, skinSecondId: number,
-		skinThirdId: number, shapeMix: number, skinMix: number, thirdMix: number): void;
+	setHeadBlend(shapeFirst: number, shapeSecond: number, shapeThird: number, skinFirst: number, skinSecond: number,
+		skinThird: number, shapeMix: number, skinMix: number, thirdMix: number): void;
 	setHeadOverlay(overlay: RageEnums.HeadOverlay | number, value: Array4d): void;
 	setProp(prop: RageEnums.PlayerProp | number, drawable: number, texture: number): void;
 	setWeaponAmmo(weapon: HashOrString, ammo: number): void;

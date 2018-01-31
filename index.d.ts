@@ -176,7 +176,7 @@ interface PlayerMp extends EntityMp {
 	removeObject(object: any): void; // TODO
 	removeWeapon(weaponHash: number): void;
 	setClothes(component: RageEnums.ClothesComponent | number, drawable: number, texture: number, palette: number): void;
-	setCustomization(gender: boolean,	shapeFirst: number, shapeSecond: number, shapeThird: number, skinFirst: number,
+	setCustomization(gender: boolean, shapeFirst: number, shapeSecond: number, shapeThird: number, skinFirst: number,
 		skinSecond: number, skinThird: number, shapeMix: number, skinMix: number, thirdMix: number, eyeColor: number,
 		hairColor: number, hightlightColor: number, faceFeatures: number[]
 	): void;

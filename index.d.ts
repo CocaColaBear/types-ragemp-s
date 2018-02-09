@@ -1,4 +1,6 @@
 /// <reference path="enums.d.ts" />
+/// <reference path="ped_models.d.ts" />
+/// <reference path="vehicle_models.d.ts" />
 
 // -------------------------------------------------------------------------
 // Custom types

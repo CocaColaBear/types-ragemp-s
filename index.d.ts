@@ -1,6 +1,7 @@
 /// <reference path="enums.d.ts" />
-/// <reference path="ped_models.d.ts" />
-/// <reference path="vehicle_models.d.ts" />
+/// <reference path="ped_hashes.d.ts" />
+/// <reference path="vehicle_hashes.d.ts" />
+/// <reference path="weapon_hashes.d.ts" />
 
 // -------------------------------------------------------------------------
 // Custom types
@@ -163,9 +164,9 @@ interface PlayerMp extends EntityMp {
 		drawable: number,
 		texture: number
 	};
-	getWeaponAmmo(weapon: HashOrString): number;
-	giveWeapon(weaponHash: number, ammo: number): void;
-	giveWeapon(weaponHashes: number[], ammo: number): void;
+	getWeaponAmmo(weapon: RageEnums.Hashes.Weapon | HashOrString): number;
+	giveWeapon(weaponHash: RageEnums.Hashes.Weapon | HashOrString, ammo: number): void;
+	giveWeapon(weaponHashes: (RageEnums.Hashes.Weapon | HashOrString)[], ammo: number): void;
 	isStreamed(player: PlayerMp): boolean;
 	invoke(hash: string, ...args: any[]): void;
 	kick(reason: string): void;
@@ -176,7 +177,7 @@ interface PlayerMp extends EntityMp {
 	removeAllWeapons(): void;
 	removeFromVehicle(): void;
 	removeObject(object: any): void; // TODO
-	removeWeapon(weaponHash: number): void;
+	removeWeapon(weaponHash: RageEnums.Hashes.Weapon | HashOrString): void;
 	setClothes(component: RageEnums.ClothesComponent | number, drawable: number, texture: number, palette: number): void;
 	setCustomization(gender: boolean, shapeFirst: number, shapeSecond: number, shapeThird: number, skinFirst: number,
 		skinSecond: number, skinThird: number, shapeMix: number, skinMix: number, thirdMix: number, eyeColor: number,
@@ -189,7 +190,7 @@ interface PlayerMp extends EntityMp {
 		skinThird: number, shapeMix: number, skinMix: number, thirdMix: number): void;
 	setHeadOverlay(overlay: RageEnums.HeadOverlay | number, value: Array4d): void;
 	setProp(prop: RageEnums.PlayerProp | number, drawable: number, texture: number): void;
-	setWeaponAmmo(weapon: HashOrString, ammo: number): void;
+	setWeaponAmmo(weapon: RageEnums.Hashes.Weapon | HashOrString, ammo: number): void;
 	spawn(position: Vector3Mp): void;
 	updateHeadBlend(shapeMix: number, skinMix: number, thirdMix: number): void;
 }
@@ -384,7 +385,7 @@ interface TextLabelMpPool extends EntityMpPool<TextLabelMp> {
 }
 
 interface VehicleMpPool extends EntityMpPool<VehicleMp> {
-	"new"(model: HashOrString, position: Vector3Mp, options?: {
+	"new"(model: RageEnums.Hashes.Vehicle | HashOrString, position: Vector3Mp, options?: {
 		alpha?: number,
 		color?: [ Array2d, Array2d ] | [ RGB, RGB ],
 		dimension?: number,

@@ -175,6 +175,7 @@ interface PlayerMp extends EntityMp {
 	playAnimation(dict: string, name: string, speed: number, flag: number): void;
 	putIntoVehicle(vehicle: VehicleMp, seat: RageEnums.VehicleSeat | number): void;
 	removeAllWeapons(): void;
+	removeDecoration(decoration: number, collection: number): void;
 	removeFromVehicle(): void;
 	removeObject(object: any): void; // TODO
 	removeWeapon(weaponHash: RageEnums.Hashes.Weapon | HashOrString): void;
@@ -269,6 +270,8 @@ interface WorldMp {
 		hour: number,
 		minute: number,
 		second: number
+		
+		set(hour: number, minute: number, second: number): void;
 	};
 	trafficLights: {
 		locked: boolean,

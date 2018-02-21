@@ -1,6 +1,7 @@
 declare namespace RageEnums {
 	const enum EventKey {
 		entityCreated = "entityCreated",
+		entityDataChange = "entityDataChange",
 		entityDestroyed = "entityDestroyed",
 		entityModelChange = "entityModelChange",
 		playerChat = "playerChat",
@@ -24,13 +25,12 @@ declare namespace RageEnums {
 		playerStreamIn = "playerStreamIn",
 		playerStreamOut = "playerStreamOut",
 		playerWeaponChange = "playerWeaponChange",
-		vehicleAttachTrailer = "vehicleAttachTrailer",
+		trailerAttached = "trailerAttached",
 		vehicleDamage = "vehicleDamage",
 		vehicleHornToggle = "vehicleHornToggle",
 		vehicleSirenToggle = "vehicleSirenToggle",
 		vehicleStreamIn = "vehicleStreamIn",
-		vehicleStreamOut = "vehicleStreamOut",
-		vehicleTrailerAttach = "vehicleTrailerAttach"
+		vehicleStreamOut = "vehicleStreamOut"
 	}
 
 	const enum ClothesComponent {

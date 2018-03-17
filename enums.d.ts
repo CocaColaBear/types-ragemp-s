@@ -1,4 +1,4 @@
-declare namespace RageEnums {
+declare namespace Server.RageEnums {
 	const enum EventKey {
 		entityCreated = "entityCreated",
 		entityDataChange = "entityDataChange",

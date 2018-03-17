@@ -17,6 +17,8 @@ type Array4d = [ number, number, number, number ];
 // -------------------------------------------------------------------------
 // Main MP type
 // -------------------------------------------------------------------------
+declare namespace Server {
+
 
 type Mp = {
 	blips: BlipMpPool;
@@ -437,4 +439,5 @@ interface Function {
 // Vars
 // -------------------------------------------------------------------------
 
-declare const mp: Mp;
+const mp: Mp;
+}

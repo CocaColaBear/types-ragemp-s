@@ -1,5 +1,5 @@
-declare namespace RageEnums {
-	const enum EventKey {
+declare namespace RageMP.Enums {
+	const enum Event {
 		ENTITY_CREATED = "entityCreated",
 		ENTITY_DESTROYED = "entityDestroyed",
 		ENTITY_MODEL_CHANGE = "entityModelChange",

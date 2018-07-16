@@ -284,7 +284,7 @@ declare namespace RageMP {
 		setWeatherTransition(weather: RageMP.Enums.Weather | string, duration?: number): void;
 	}
 
-	interface EventMp {
+	interface Event {
 		destroy(): void;
 	}
 
@@ -340,7 +340,7 @@ declare namespace RageMP {
 		add(events: ({ [name: string]: (...args: any[]) => void; })): void;
 		addCommand(commandName: string, callback: (player: Player, fullText: string, ...args: string[]) => void): void;
 		call(eventName: string, ...args: any[]): void;
-		getAllOf(eventName: string): EventMp[];
+		getAllOf(eventName: string): Event[];
 		remove(eventName: string, handler?: (...args: any[]) => void): void;
 		remove(eventNames: string[]): void;
 		reset(): void;
@@ -431,7 +431,7 @@ declare namespace RageMP {
 
 	interface Function {
 		cancel: boolean;
-		handler: EventMp;
+		handler: Event;
 	}
 }
 

@@ -173,6 +173,7 @@ interface PlayerMp extends EntityMp {
 	notify(message: string): void;
 	outputChatBox(message: string): void;
 	playAnimation(dict: string, name: string, speed: number, flag: number): void;
+	stopAnimation(): void;
 	putIntoVehicle(vehicle: VehicleMp, seat: RageEnums.VehicleSeat | number): void;
 	removeAllWeapons(): void;
 	removeDecoration(decoration: number, collection: number): void;

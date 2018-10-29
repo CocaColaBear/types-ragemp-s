@@ -142,9 +142,13 @@ interface PlayerMp extends EntityMp {
 	readonly streamedPlayers: PlayerMp[];
 	readonly weapons: PlayerWeaponCollectionMp;
 	readonly vehicle: VehicleMp;
+	readonly voiceListeners: PlayerMp[];
 
 	ban(reason: string): void;
 	call(eventName: string, ...args: any[]): void;
+	clearDecorations(): void;
+	disableVoiceTo(targetPlayer: PlayerMp): void;
+	enableVoiceTo(targetPlayer: PlayerMp): void;
 	getClothes(component: RageEnums.ClothesComponent | number): {
 		drawable: number,
 		texture: number,

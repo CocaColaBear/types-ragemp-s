@@ -262,7 +262,6 @@ interface VehicleMp extends EntityMp {
 	setPaint(primaryType: number, primaryColor: number, secondaryType: number, secondaryColor: number): void;
 	setOccupant(seat: number, player: PlayerMp): void;
 	spawn(position: Vector3Mp, heading: number): void;
-	stopAnimation(): void;
 }
 
 // -------------------------------------------------------------------------

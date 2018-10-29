@@ -143,9 +143,13 @@ declare namespace RageMP {
 		readonly streamedPlayers: Player[];
 		readonly weapons: PlayerWeaponCollection;
 		readonly vehicle: Vehicle;
+		readonly voiceListeners: Player[];
 
 		ban(reason: string): void;
 		call(eventName: string, ...args: any[]): void;
+		clearDecorations(): void;
+		disableVoiceTo(targetPlayer: Player): void;
+		enableVoiceTo(targetPlayer: Player): void;
 		getClothes(component: RageMP.Enums.ClothesComponent | number): {
 			drawable: number,
 			texture: number,
@@ -258,7 +262,6 @@ declare namespace RageMP {
 		setPaint(primaryType: number, primaryColor: number, secondaryType: number, secondaryColor: number): void;
 		setOccupant(seat: number, player: Player): void;
 		spawn(position: Vector3, heading: number): void;
-		stopAnimation(): void;
 	}
 
 	// -------------------------------------------------------------------------

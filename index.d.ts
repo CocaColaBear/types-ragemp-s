@@ -244,7 +244,7 @@ interface VehicleMp extends EntityMp {
 
 	explode(): void;
 	getColor(id: number): number; // id: 0 - primary, 1 - secondary
-	getColorRGB(): RGB;
+	getColorRGB(id: number): RGB; // id: 0 - primary, 1 - secondary
 	getExtra(index: number): boolean;
 	getMod(modType: number): number;
 	getNeonColor(): number[];
@@ -334,7 +334,8 @@ interface EntityMpPool<TEntity> {
 	exists(entity: TEntity | number): boolean;
 	forEach(fn: (entity: TEntity) => void): void;
 	forEachInRange(position: Vector3Mp, range: number, fn: (entity: TEntity) => void): void;
-	forEachInDimension(position: Vector3Mp, range: number, dimension: number, fn: (entity: TEntity) => void): void;
+	forEachInRange(position: Vector3Mp, range: number, dimension: number, fn: (entity: TEntity) => void): void;
+	forEachInDimension(dimension: number, fn: (entity: TEntity) => void): void;
 	toArray(): TEntity[];
 }
 
@@ -414,6 +415,17 @@ type Vector3Mp = {
 	x: number;
 	y: number;
 	z: number;
+
+	add(value: number): Vector3Mp;
+	add(vector3: Vector3Mp): Vector3Mp;
+	divide(value: number): Vector3Mp;
+	divide(vector3: Vector3Mp): Vector3Mp;
+	length(): number;
+	multiply(value: number): Vector3Mp;
+	multiply(vector3: Vector3Mp): Vector3Mp;
+	subtract(value: number): Vector3Mp;
+	subtract(vector3: Vector3Mp): Vector3Mp;
+	unit(): Vector3Mp;
 }
 
 type PlayerWeaponCollectionMp = {

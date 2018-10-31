@@ -244,7 +244,7 @@ declare namespace RageMP {
 
 		explode(): void;
 		getColor(id: number): number; // id: 0 - primary, 1 - secondary
-		getColorRGB(): RGB;
+		getColorRGB(id: number): RGB; // id: 0 - primary, 1 - secondary
 		getExtra(index: number): boolean;
 		getMod(modType: number): number;
 		getNeonColor(): number[];
@@ -334,7 +334,8 @@ declare namespace RageMP {
 		exists(entity: TEntity | number): boolean;
 		forEach(fn: (entity: TEntity) => void): void;
 		forEachInRange(position: Vector3, range: number, fn: (entity: TEntity) => void): void;
-		forEachInDimension(position: Vector3, range: number, dimension: number, fn: (entity: TEntity) => void): void;
+		forEachInRange(position: Vector3, range: number, dimension: number, fn: (entity: TEntity) => void): void;
+		forEachInDimension(dimension: number, fn: (entity: TEntity) => void): void;
 		toArray(): TEntity[];
 	}
 
@@ -413,6 +414,17 @@ declare namespace RageMP {
 		x: number;
 		y: number;
 		z: number;
+
+		add(value: number): Vector3;
+		add(vector3: Vector3): Vector3;
+		divide(value: number): Vector3;
+		divide(vector3: Vector3): Vector3;
+		length(): number;
+		multiply(value: number): Vector3;
+		multiply(vector3: Vector3): Vector3;
+		subtract(value: number): Vector3;
+		subtract(vector3: Vector3): Vector3;
+		unit(): Vector3;
 	}
 
 	type PlayerWeaponCollection = {

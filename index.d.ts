@@ -199,6 +199,7 @@ interface PlayerMp extends EntityMp {
 	setWeaponAmmo(weapon: RageEnums.Hashes.Weapon | HashOrString, ammo: number): void;
 	spawn(position: Vector3Mp): void;
 	updateHeadBlend(shapeMix: number, skinMix: number, thirdMix: number): void;
+	playScenario(scenario: string): void;
 }
 
 interface TextLabelMp extends EntityMp {

@@ -29,6 +29,7 @@ type Mp = {
 	players: PlayerMpPool;
 	objects: ObjectMpPool;
 	vehicles: VehicleMpPool;
+	config: ConfigMp,
 	world: WorldMp;
 
 	Event: { 
@@ -290,6 +291,34 @@ interface WorldMp {
 
 interface EventMp {
 	destroy(): void;
+}
+
+interface ConfigMp {
+	announce: boolean,
+	bind: string,
+	gamemode: string,
+	encryption: boolean,
+	maxplayers: number,
+	name: string,
+	'stream-distance': number,
+	port: number,
+	'disallow-multiple-connections-per-ip': boolean,
+	'limit-time-of-connections-per-ip': number,
+	url: string,
+	language: string,
+	'sync-rate': number,
+	'resource-scan-thread-limit': number,
+	'max-ping': number,
+	'min-fps': number,
+	'max-packet-loss': number,
+	'allow-cef-debugging': boolean,
+	'enable-nodejs': boolean,
+	'csharp': boolean,
+	'enable-http-security': boolean,
+	'voice-chat': boolean,
+	'allow-voice-chat-input': number,
+	'voice-chat-sample-rate': number,
+	'fastdl-host': string,
 }
 
 // -------------------------------------------------------------------------

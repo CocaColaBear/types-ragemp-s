@@ -408,10 +408,11 @@ interface PlayerMpPool extends EntityMpPool<PlayerMp> {
 	broadcast(text: string): void;
 	broadcastInRange(position: Vector3Mp, range: number, text: string): void;
 	broadcastInRange(position: Vector3Mp, range: number, dimension: number, text: string): void;
+	broadcastInDimension(dimension: number, text: string): void;
 	call(eventName: string, ...args: any[]): void;
 	call(players: PlayerMp[], eventName: string, ...args: any[]): void;
-	callInDimension(eventName: string, ...args: any[]): void;
-	callInRange(eventName: string, ...args: any[]): void;
+	callInDimension(dimension: number, eventName: string, ...args: any[]): void;
+	callInRange(position: Vector3Mp, range: number, eventName: string, ...args: any[]): void;
 }
 
 interface TextLabelMpPool extends EntityMpPool<TextLabelMp> {

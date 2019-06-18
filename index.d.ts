@@ -294,6 +294,7 @@ interface EventMp {
 }
 
 interface ConfigMp {
+	[prop: string]: any,
 	announce: boolean,
 	bind: string,
 	gamemode: string,

@@ -146,7 +146,7 @@ interface PlayerMp extends EntityMp {
 	readonly voiceListeners: PlayerMp[];
 
 	ban(reason: string): void;
-	call(eventName: string, ...args: any[]): void;
+	call(eventName: string, args: any[]): void;
 	clearDecorations(): void;
 	disableVoiceTo(targetPlayer: PlayerMp): void;
 	enableVoiceTo(targetPlayer: PlayerMp): void;

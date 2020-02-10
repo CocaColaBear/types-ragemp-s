@@ -138,7 +138,9 @@ interface PlayerMp extends EntityMp {
 	readonly hairHighlightColor: number;
 	readonly packetLoss: number;
 	readonly ping: number;
+	readonly rgscId: string;
 	readonly seat: RageEnums.VehicleSeat;
+	readonly serial: string;
 	readonly socialClub: string;
 	readonly streamedPlayers: PlayerMp[];
 	readonly weapons: PlayerWeaponCollectionMp;
@@ -366,6 +368,7 @@ interface EntityMpPool<TEntity> {
 	forEachInRange(position: Vector3Mp, range: number, fn: (entity: TEntity) => void): void;
 	forEachInRange(position: Vector3Mp, range: number, dimension: number, fn: (entity: TEntity) => void): void;
 	forEachInDimension(dimension: number, fn: (entity: TEntity) => void): void;
+	getClosest(position: Vector3Mp, limit: number): TEntity
 	toArray(): TEntity[];
 }
 
@@ -375,6 +378,9 @@ interface EventMpPool {
 	addCommand(commandName: string, callback: (player: PlayerMp, fullText: string, ...args: string[]) => void): void;
 	addCommand(commands: { [commandName: string]: (player: PlayerMp, fullText: string, ...args: string[]) => void; }): void;
 	call(eventName: string, ...args: any[]): void;
+	callLocal(eventName: string, ...args: any[]): void;
+	delayShutdown: boolean
+	delayInitialization: boolean
 	getAllOf(eventName: string): EventMp[];
 	remove(eventName: string, handler?: (...args: any[]) => void): void;
 	remove(eventNames: string[]): void;

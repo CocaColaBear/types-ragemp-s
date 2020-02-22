@@ -81,7 +81,8 @@ interface ColshapeMp extends EntityMp {
 	isPointWithin(point: Vector3Mp): boolean;
 }
 
-interface DummyEntityMp extends EntityMp {
+interface DummyEntityMp {
+	dummyType: number;
 }
 
 interface EntityMp {
@@ -177,7 +178,7 @@ interface PlayerMp extends EntityMp {
 		skinMix: number,
 		thirdMix: number
 	};
-	getHeadBlendPaletteColor(type: 0 | 1 | 2 | 3): any; // TODO
+	getHeadBlendPaletteColor(type: 0 | 1 | 2 | 3): Array3d;
 	getHeadOverlay(overlay: RageEnums.HeadOverlay | number): Array4d;
 	getOwnVariable(key: string): any;
 	getProp(prop: RageEnums.PlayerProp | number): {
@@ -211,7 +212,7 @@ interface PlayerMp extends EntityMp {
 	setHairColor(firstColor: number, secondColor: number): void;
 	setHeadBlend(shapeFirst: number, shapeSecond: number, shapeThird: number, skinFirst: number, skinSecond: number,
 		skinThird: number, shapeMix: number, skinMix: number, thirdMix: number): void;
-	setHeadBlendPaletteColor(rgbColor: any, type: 0 | 1 | 2 | 3): void; // TODO
+	setHeadBlendPaletteColor(rgbColor: Array3d, type: 0 | 1 | 2 | 3): void;
 	setHeadOverlay(overlay: RageEnums.HeadOverlay | number, value: Array4d): void;
 	setOwnVariable(key: string, value: any): void;
 	setOwnVariable(values: KeyValueCollection): void;
@@ -375,7 +376,7 @@ interface ColshapeMpPool extends EntityMpPool<ColshapeMp> {
 	newTube(x: number, y: number, z: number, range: number, height: number): ColshapeMp;
 }
 
-interface DummyEntityMpPool extends EntityMpPool<DummyEntityMp> {
+interface DummyEntityMpPool {
 	"new"(dummyEntityType: number, sharedVariables: KeyValueCollection): DummyEntityMp;
 
 	forEachByType(dummyEntityType: number, fn: (entity: DummyEntityMp) => void): void;

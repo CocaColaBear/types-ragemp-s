@@ -5,8 +5,16 @@
 
 Run this through command promt:
 
+# 0.3.7 Version:
+
 ``` bash
 npm install --save-dev github:CocaColaBear/types-ragemp-s#master
+```
+
+# 1.0 Developer Preview #1 Version:
+
+``` bash
+npm install --save-dev github:CocaColaBear/types-ragemp-s#v1.0
 ```
 
 That's all, now you can use ragemp types for **Server-side**!

@@ -13,6 +13,7 @@ type RGBA = [ number, number, number, number ];
 type Array2d = [ number, number ];
 type Array3d = [ number, number, number ];
 type Array4d = [ number, number, number, number ];
+type KeyValueCollection = { [key: string]: any };
 
 // -------------------------------------------------------------------------
 // Main MP type
@@ -22,9 +23,11 @@ type Mp = {
 	blips: BlipMpPool;
 	checkpoints: CheckpointMpPool;
 	colshapes: ColshapeMpPool;
+	dummies: DummyEntityMpPool;
 	events: EventMpPool;
 	labels: TextLabelMpPool;
 	markers: MarkerMpPool;
+	peds: PedMpPool;
 	pickups: PickupMpPool;
 	players: PlayerMpPool;
 	objects: ObjectMpPool;
@@ -78,6 +81,9 @@ interface ColshapeMp extends EntityMp {
 	isPointWithin(point: Vector3Mp): boolean;
 }
 
+interface DummyEntityMp extends EntityMp {
+}
+
 interface EntityMp {
 	alpha: number;
 	data: any;
@@ -92,6 +98,7 @@ interface EntityMp {
 	dist(position: Vector3Mp): number;
 	distSquared(position: Vector3Mp): number;
 	setVariable(name: string, value: any): void;
+	setVariables(values: KeyValueCollection): void;
 }
 
 interface MarkerMp extends EntityMp {
@@ -103,6 +110,10 @@ interface MarkerMp extends EntityMp {
 	hideFor(player: PlayerMp): void;
 	setColor(red: number, green: number, blue: number, alpha: number): void;
 	showFor(player: PlayerMp): void;
+}
+
+interface PedMp {
+	controller: PlayerMp;
 }
 
 interface ObjectMp extends EntityMp {
@@ -166,7 +177,9 @@ interface PlayerMp extends EntityMp {
 		skinMix: number,
 		thirdMix: number
 	};
+	getHeadBlendPaletteColor(type: 0 | 1 | 2 | 3): any; // TODO
 	getHeadOverlay(overlay: RageEnums.HeadOverlay | number): Array4d;
+	getOwnVariable(key: string): any;
 	getProp(prop: RageEnums.PlayerProp | number): {
 		drawable: number,
 		texture: number
@@ -177,6 +190,7 @@ interface PlayerMp extends EntityMp {
 	isStreamed(player: PlayerMp): boolean;
 	invoke(hash: string, ...args: any[]): void;
 	kick(reason: string): void;
+	kickSilent(...args: any[]): void; // TODO
 	notify(message: string): void;
 	outputChatBox(message: string): void;
 	playAnimation(dict: string, name: string, speed: number, flag: number): void;
@@ -197,7 +211,10 @@ interface PlayerMp extends EntityMp {
 	setHairColor(firstColor: number, secondColor: number): void;
 	setHeadBlend(shapeFirst: number, shapeSecond: number, shapeThird: number, skinFirst: number, skinSecond: number,
 		skinThird: number, shapeMix: number, skinMix: number, thirdMix: number): void;
+	setHeadBlendPaletteColor(rgbColor: any, type: 0 | 1 | 2 | 3): void; // TODO
 	setHeadOverlay(overlay: RageEnums.HeadOverlay | number, value: Array4d): void;
+	setOwnVariable(key: string, value: any): void;
+	setOwnVariable(values: KeyValueCollection): void;
 	setProp(prop: RageEnums.PlayerProp | number, drawable: number, texture: number): void;
 	setWeaponAmmo(weapon: RageEnums.Hashes.Weapon | HashOrString, ammo: number): void;
 	spawn(position: Vector3Mp): void;
@@ -215,6 +232,7 @@ interface TextLabelMp extends EntityMp {
 interface VehicleMp extends EntityMp {
 	bodyHealth: number;
 	brake: boolean;
+	customTires: boolean;
 	engine: boolean;
 	engineHealth: number;
 	dashboardColor: number;
@@ -357,6 +375,12 @@ interface ColshapeMpPool extends EntityMpPool<ColshapeMp> {
 	newTube(x: number, y: number, z: number, range: number, height: number): ColshapeMp;
 }
 
+interface DummyEntityMpPool extends EntityMpPool<DummyEntityMp> {
+	"new"(dummyEntityType: number, sharedVariables: KeyValueCollection): DummyEntityMp;
+
+	forEachByType(dummyEntityType: number, fn: (entity: DummyEntityMp) => void): void;
+}
+
 interface EntityMpPool<TEntity> {
 	readonly length: number;
 	readonly size: number;
@@ -369,18 +393,20 @@ interface EntityMpPool<TEntity> {
 	forEachInRange(position: Vector3Mp, range: number, dimension: number, fn: (entity: TEntity) => void): void;
 	forEachInDimension(dimension: number, fn: (entity: TEntity) => void): void;
 	getClosest(position: Vector3Mp, limit: number): TEntity
+	getClosestInDimension(position: Vector3Mp, dimension: number, limit?: number): TEntity;
 	toArray(): TEntity[];
 }
 
 interface EventMpPool {
+	delayShutdown: boolean
+	delayInitialization: boolean
+
 	add(eventName: RageEnums.EventKey | string, callback: (...args: any[]) => void): void;
 	add(events: ({ [name: string]: (...args: any[]) => void; })): void;
 	addCommand(commandName: string, callback: (player: PlayerMp, fullText: string, ...args: string[]) => void): void;
 	addCommand(commands: { [commandName: string]: (player: PlayerMp, fullText: string, ...args: string[]) => void; }): void;
-	call(eventName: string, ...args: any[]): void;
-	callLocal(eventName: string, ...args: any[]): void;
-	delayShutdown: boolean
-	delayInitialization: boolean
+	call(eventName: string, args?: any[]): void;
+	callLocal(eventName: string, args?: any[]): void;
 	getAllOf(eventName: string): EventMp[];
 	remove(eventName: string, handler?: (...args: any[]) => void): void;
 	remove(eventNames: string[]): void;
@@ -395,6 +421,14 @@ interface MarkerMpPool extends EntityMpPool<MarkerMp> {
 		rotation?: Vector3Mp,
 		visible?: boolean
 	}): MarkerMp;
+}
+
+interface PedMpPool extends EntityMpPool<PedMp> {
+	"new"(modelHash: number, position: Vector3Mp, options?: {
+		dynamic: boolean,
+		frozen: boolean,
+		invincible: boolean
+	}): PedMp;
 }
 
 interface ObjectMpPool extends EntityMpPool<ObjectMp> {
@@ -413,10 +447,16 @@ interface PlayerMpPool extends EntityMpPool<PlayerMp> {
 	broadcast(text: string): void;
 	broadcastInRange(position: Vector3Mp, range: number, text: string): void;
 	broadcastInRange(position: Vector3Mp, range: number, dimension: number, text: string): void;
-	call(eventName: string, ...args: any[]): void;
-	call(players: PlayerMp[], eventName: string, ...args: any[]): void;
-	callInDimension(eventName: string, ...args: any[]): void;
-	callInRange(eventName: string, ...args: any[]): void;
+	call(eventName: string, args?: any[]): void;
+	call(players: PlayerMp[], eventName: string, args?: any[]): void;
+	callInDimension(dimension: number, eventName: string, args?: any[]): void;
+	callInRange(position: Vector3Mp, range: number, eventName: string, args?: any[]): void;
+	callInRange(position: Vector3Mp, range: number, dimension: number, eventName: string, args?: any[]): void;
+	callUnreliable(eventName: string, args?: any[]): void;
+	callUnreliable(players: PlayerMp[], eventName: string, args?: any[]): void;
+	callUnreliableInDimension(dimension: number, eventName: string, args?: any[]): void;
+	callUnreliableInRange(position: Vector3Mp, range: number, eventName: string, args?: any[]): void;
+	callUnreliableInRange(position: Vector3Mp, range: number, dimension: number, eventName: string, args?: any[]): void;
 }
 
 interface TextLabelMpPool extends EntityMpPool<TextLabelMp> {

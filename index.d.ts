@@ -406,7 +406,7 @@ interface EventMpPool {
 	add(events: ({ [name: string]: (...args: any[]) => void; })): void;
 	addCommand(commandName: string, callback: (player: PlayerMp, fullText: string, ...args: string[]) => void): void;
 	addCommand(commands: { [commandName: string]: (player: PlayerMp, fullText: string, ...args: string[]) => void; }): void;
-	call(eventName: string, args?: any[]): void;
+	call(eventName: string, ...args: any[]): void;
 	callLocal(eventName: string, args?: any[]): void;
 	getAllOf(eventName: string): EventMp[];
 	remove(eventName: string, handler?: (...args: any[]) => void): void;

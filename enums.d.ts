@@ -129,10 +129,10 @@ declare namespace RageEnums {
 	}
 
 	const enum VehicleSeat {
-		DRIVER = 0,
-		PASSENGER_1 = 1,
-		PASSENGER_2 = 2,
-		PASSENGER_3 = 3
+		DRIVER,
+		PASSENGER_1,
+		PASSENGER_2,
+		PASSENGER_3
 	}
 
 	const enum Weather {

@@ -2,6 +2,8 @@
 /// <reference path="ped_hashes.d.ts" />
 /// <reference path="vehicle_hashes.d.ts" />
 /// <reference path="weapon_hashes.d.ts" />
+/// <reference path="object_hashes.d.ts" />
+/// <reference path="death_cases_hashes.d.ts" />
 
 // -------------------------------------------------------------------------
 // Custom types
@@ -32,8 +34,8 @@ type Mp = {
 	config: ConfigMp,
 	world: WorldMp;
 
-	Event: { 
-		new(eventName: RageEnums.EventKey | string, callback: (...args: any[]) => void): EventMp 
+	Event: {
+		new(eventName: RageEnums.EventKey | string, callback: (...args: any[]) => void): EventMp
 	};
 	Vector3: Vector3Mp;
 
@@ -86,7 +88,7 @@ interface EntityMp {
 	position: Vector3Mp;
 	readonly id: number;
 	readonly type: RageEnums.EntityType;
-	
+
 	getVariable(name: string): any | undefined;
 	destroy(): void;
 	dist(position: Vector3Mp): number;
@@ -274,11 +276,11 @@ interface VehicleMp extends EntityMp {
 
 interface WorldMp {
 	weather: RageEnums.Weather | string;
-	time: { 
+	time: {
 		hour: number,
 		minute: number,
 		second: number
-		
+
 		set(hour: number, minute: number, second: number): void;
 	};
 	trafficLights: {
@@ -399,7 +401,7 @@ interface MarkerMpPool extends EntityMpPool<MarkerMp> {
 }
 
 interface ObjectMpPool extends EntityMpPool<ObjectMp> {
-	"new"(model: HashOrString, position: Vector3Mp, options?: {
+	"new"(model: RageEnums.Hashes.Object | HashOrString, position: Vector3Mp, options?: {
 		alpha?: number,
 		dimension?: number,
 		rotation?: Vector3Mp

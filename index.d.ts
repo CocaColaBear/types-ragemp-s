@@ -494,14 +494,25 @@ type Vector3Mp = {
 	z: number;
 
 	add(value: number): Vector3Mp;
-	add(vector3: Vector3Mp): Vector3Mp;
+	add(vector3: Vector3Mp): Vector3Mp
+	angleTo(vector3: Vector3Mp): number;
+	clone(): Vector3Mp;
+	cross(vector3: Vector3Mp): Vector3Mp;
 	divide(value: number): Vector3Mp;
 	divide(vector3: Vector3Mp): Vector3Mp;
+	dot(vector3: Vector3Mp): Vector3Mp;
+	equals(vector3: Vector3Mp): boolean;
+	equals(vector3: Vector3Mp): boolean;
 	length(): number;
+	max(): number;
+	min(): number;
 	multiply(value: number): Vector3Mp;
 	multiply(vector3: Vector3Mp): Vector3Mp;
+	negative(): Vector3Mp;
 	subtract(value: number): Vector3Mp;
 	subtract(vector3: Vector3Mp): Vector3Mp;
+	toAngles(): any[];
+	toArray(): number[];
 	unit(): Vector3Mp;
 }
 

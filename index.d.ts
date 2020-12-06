@@ -135,6 +135,7 @@ interface PlayerMp extends EntityMp {
 	name: string;
 	weapon: number;
 	weaponAmmo: number;
+	disableOutgoingSync: boolean;
 	readonly action: string;
 	readonly aimTarget: PlayerMp;
 	readonly allWeapons: number[];
@@ -229,6 +230,7 @@ interface PlayerMp extends EntityMp {
 	spawn(position: Vector3Mp): void;
 	updateHeadBlend(shapeMix: number, skinMix: number, thirdMix: number): void;
 	playScenario(scenario: string): void;
+	callToStreamed(includeSelf: boolean, eventName: string, args?: any[])
 }
 
 interface TextLabelMp extends EntityMp {
@@ -412,6 +414,7 @@ interface EntityMpPool<TEntity> {
 	getClosestInDimension(position: Vector3Mp, dimension: number): TEntity;
 	getClosestInDimension(position: Vector3Mp, dimension: number, limit: number): TEntity[];
 	toArray(): TEntity[];
+	toArrayFast(): TEntity[];
 }
 
 interface EventMpPool {

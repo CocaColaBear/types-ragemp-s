@@ -84,6 +84,19 @@ interface ColshapeMp extends EntityMp {
 
 interface DummyEntityMp {
 	dummyType: number;
+
+	// TODO (temporary solution):
+	// Since this is a very abstract concept, it is not at all a familiar essence, but it has most of its properties.
+	// The easiest option is, of course, to inherit the EntityMpPool interface, but this will add non-existent methods and parameters associated with the dimension and position.
+	// It is proposed in the future to introduce a more abstract concept than an entity, which will have only an ID, a type and several basic methods such as deletion, enumeration and transformation into an array. The same goes for the entity pool.
+
+	readonly id: number;
+	readonly type: RageEnums.EntityType;
+
+	getVariable(name: string): any | undefined;
+	destroy(): void;
+	setVariable(name: string, value: any): void;
+	setVariables(values: KeyValueCollection): void;
 }
 
 interface EntityMp {
@@ -395,6 +408,14 @@ interface ColshapeMpPool extends EntityMpPool<ColshapeMp> {
 interface DummyEntityMpPool {
 	"new"(dummyEntityType: number, sharedVariables: KeyValueCollection): DummyEntityMp;
 
+	// TODO (temporary solution, see interface DummyEntityMp).
+
+	readonly length: number;
+	readonly size: number;
+
+	at(index: number): DummyEntityMp;
+	exists(entity: DummyEntityMp | number): boolean;
+	forEach(fn: (entity: DummyEntityMp) => void): void;
 	forEachByType(dummyEntityType: number, fn: (entity: DummyEntityMp) => void): void;
 }
 

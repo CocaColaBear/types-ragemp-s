@@ -414,10 +414,13 @@ interface DummyEntityMpPool {
 	readonly length: number;
 	readonly size: number;
 
+	apply(fn: (...args: any[]) => void, ...args: any[]): void;
 	at(index: number): DummyEntityMp;
 	exists(entity: DummyEntityMp | number): boolean;
 	forEach(fn: (entity: DummyEntityMp) => void): void;
 	forEachByType(dummyEntityType: number, fn: (entity: DummyEntityMp) => void): void;
+	toArray(): DummyEntityMp[];
+	toArrayFast(): DummyEntityMp[];
 }
 
 interface EntityMpPool<TEntity> {

@@ -88,7 +88,7 @@ interface DummyEntityMp {
 	// The easiest option is, of course, to inherit the EntityMpPool interface, but this will add non-existent methods and parameters associated with the dimension and position.
 	// It is proposed in the future to introduce a more abstract concept than an entity, which will have only an ID, a type and several basic methods such as deletion, enumeration and transformation into an array. The same goes for the entity pool.
 
-	dummyType: number;
+	dummyType: number; // btw editable and synced with clients.
 	readonly id: number;
 	readonly type: RageEnums.EntityType;
 

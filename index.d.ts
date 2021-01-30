@@ -230,7 +230,7 @@ interface PlayerMp extends EntityMp {
 	spawn(position: Vector3Mp): void;
 	updateHeadBlend(shapeMix: number, skinMix: number, thirdMix: number): void;
 	playScenario(scenario: string): void;
-	callToStreamed(includeSelf: boolean, eventName: string, args?: any[])
+	callToStreamed(includeSelf: boolean, eventName: string, args?: any[]): void;
 }
 
 interface TextLabelMp extends EntityMp {

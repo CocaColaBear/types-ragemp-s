@@ -92,6 +92,8 @@ interface EntityMp {
 	dist(position: Vector3Mp): number;
 	distSquared(position: Vector3Mp): number;
 	setVariable(name: string, value: any): void;
+	setOwnVariable(name: string, value: any): void;
+	getOwnVariable(name: string): any
 }
 
 interface MarkerMp extends EntityMp {

@@ -1,17 +1,9 @@
 /// <reference path="enums/clothes.d.ts" />
+/// <reference path="enums/colshape.d.ts" />
 /// <reference path="enums/event.d.ts" />
 /// <reference path="enums/vehicle.d.ts" />
 
 declare namespace RageEnums {
-	const enum ColshapeType {
-		CIRCLE = "circle",
-		CUBOID = "cuboid",
-		POLYGON = "polygon",
-		RECTANGLE = "rectangle",
-		SPHERE = "sphere",
-		TUBE = "tube"
-	}
-
 	const enum EntityType {
 		BLIP = "blip",
 		CHECKPOINT = "checkpoint",

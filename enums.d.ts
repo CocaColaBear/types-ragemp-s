@@ -1,3 +1,5 @@
+/// <reference path="enums/vehicle.d.ts" />
+
 declare namespace RageEnums {
 	const enum EventKey {
 		ENTITY_CREATED = "entityCreated",

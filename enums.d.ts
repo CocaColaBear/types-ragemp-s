@@ -1,23 +1,8 @@
+/// <reference path="enums/clothes.d.ts" />
 /// <reference path="enums/event.d.ts" />
 /// <reference path="enums/vehicle.d.ts" />
 
 declare namespace RageEnums {
-	const enum ClothesComponent {
-		HEAD = 0,
-    BEARD = 1,
-    HAIR = 2,
-    TORSO = 3,
-    LEGS = 4,
-    HANDS = 5,
-    FOOT = 6,
-    NONE = 7,
-    ACCESSORIES_1 = 8,
-    ACCESSORIES_2 = 9,
-    MASK = 10,
-    DECALS = 11,
-    AUXILIARY = 12
-	}
-
 	const enum ColshapeType {
 		CIRCLE = "circle",
 		CUBOID = "cuboid",

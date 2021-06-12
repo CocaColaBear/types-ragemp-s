@@ -1,7 +1,4 @@
 /// <reference path="enums.d.ts" />
-/// <reference path="ped_hashes.d.ts" />
-/// <reference path="vehicle_hashes.d.ts" />
-/// <reference path="weapon_hashes.d.ts" />
 
 // -------------------------------------------------------------------------
 // Custom types
@@ -154,7 +151,7 @@ interface PlayerMp extends EntityMp {
 	readonly packetLoss: number;
 	readonly ping: number;
 	readonly rgscId: string;
-	readonly seat: RageEnums.VehicleSeat;
+	readonly seat: RageEnums.Vehicle.Seat;
 	readonly serial: string;
 	readonly socialClub: string;
 	readonly streamedPlayers: PlayerMp[];
@@ -205,7 +202,7 @@ interface PlayerMp extends EntityMp {
 	outputChatBox(message: string): void;
 	playAnimation(dict: string, name: string, speed: number, flag: number): void;
 	stopAnimation(): void;
-	putIntoVehicle(vehicle: VehicleMp, seat: RageEnums.VehicleSeat | number): void;
+	putIntoVehicle(vehicle: VehicleMp, seat: RageEnums.Vehicle.Seat | number): void;
 	removeAllWeapons(): void;
 	removeDecoration(decoration: number, collection: number): void;
 	removeFromVehicle(): void;

@@ -1,21 +1,10 @@
 /// <reference path="enums/clothes.d.ts" />
 /// <reference path="enums/colshape.d.ts" />
+/// <reference path="enums/entity.d.ts" />
 /// <reference path="enums/event.d.ts" />
 /// <reference path="enums/vehicle.d.ts" />
 
 declare namespace RageEnums {
-	const enum EntityType {
-		BLIP = "blip",
-		CHECKPOINT = "checkpoint",
-		COLSHAPE = "colshape",
-		DUMMY = "dummy",
-		MARKER = "marker",
-		OBJECT = "object",
-		PICKUP = "pickup",
-		PLAYER = "player",
-		VEHICLE = "vehicle"
-	}
-
 	const enum HeadOverlay {
 		BLEMISHES = 0,
     FACIAL_HAIR = 1,

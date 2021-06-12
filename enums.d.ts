@@ -5,4 +5,5 @@
 /// <reference path="enums/markers.d.ts" />
 /// <reference path="enums/ped.d.ts" />
 /// <reference path="enums/vehicle.d.ts" />
+/// <reference path="enums/weapons.d.ts" />
 /// <reference path="enums/weather.d.ts" />

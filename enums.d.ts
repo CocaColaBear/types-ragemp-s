@@ -1,43 +1,7 @@
+/// <reference path="enums/event.d.ts" />
 /// <reference path="enums/vehicle.d.ts" />
 
 declare namespace RageEnums {
-	const enum EventKey {
-		ENTITY_CREATED = "entityCreated",
-		ENTITY_DESTROYED = "entityDestroyed",
-		ENTITY_MODEL_CHANGE = "entityModelChange",
-		INCOMING_CONNECTION = "incomingConnection",
-		PACKAGES_LOADED = "packagesLoaded",
-		PLAYER_CHAT = "playerChat",
-		PLAYER_COMMAND = "playerCommand",
-		PLAYER_DAMAGE = "playerDamage",
-		PLAYER_DEATH = "playerDeath",
-		PLAYER_ENTER_CHECKPOINT = "playerEnterCheckpoint",
-		PLAYER_ENTER_COLSHAPE = "playerEnterColshape",
-		PLAYER_ENTER_VEHICLE = "playerEnterVehicle",
-		PLAYER_EXIT_CHECKPOINT = "playerExitCheckpoint",
-		PLAYER_EXIT_COLSHAPE = "playerExitColshape",
-		PLAYER_EXIT_VEHICLE = "playerExitVehicle",
-		PLAYER_JOIN = "playerJoin",
-		PLAYER_MARK_WAYPOINT = "playerMarkWaypoint",
-		PLAYER_QUIT = "playerQuit",
-		PLAYER_REACH_WAYPOINT = "playerReachWaypoint",
-		PLAYER_READY = "playerReady",
-		PLAYER_SPAWN = "playerSpawn",
-		PLAYER_START_ENTER_VEHICLE = "playerStartEnterVehicle",
-		PLAYER_START_EXIT_VEHICLE = "playerStartExitVehicle",
-		PLAYER_STREAM_IN = "playerStreamIn",
-		PLAYER_STREAM_OUT = "playerStreamOut",
-		PLAYER_WEAPON_CHANGE = "playerWeaponChange",
-		SERVER_SHUTDOWN = "serverShutdown",
-		TRAILER_ATTACHED = "trailerAttached",
-		VEHICLE_DAMAGE = "vehicleDamage",
-		VEHICLE_DEATH = "vehicleDeath",
-		VEHICLE_HORN_TOGGLE = "vehicleHornToggle",
-		VEHICLE_SIREN_TOGGLE = "vehicleSirenToggle",
-		VEHICLE_STREAM_IN = "vehicleStreamIn",
-		VEHICLE_STREAM_OUT = "vehicleStreamOut"
-	}
-
 	const enum ClothesComponent {
 		HEAD = 0,
     BEARD = 1,

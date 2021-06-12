@@ -7,12 +7,6 @@
 /// <reference path="enums/vehicle.d.ts" />
 
 declare namespace RageEnums {
-	const enum PlayerProp {
-		HELMET = 0,
-		GLASSES = 1,
-		EAR_ACCESSORY = 2
-	}
-
 	const enum VehicleSeat {
 		DRIVER,
 		PASSENGER_1,

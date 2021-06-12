@@ -15,8 +15,15 @@ declare namespace RageEnums.Ped {
         BODY_BLEMISHES = 11,
         ADD_BODY_BLEMISHES = 12
     }
+
+    const enum Prop {
+        HELMET = 0,
+        GLASSES = 1,
+        EAR_ACCESSORY = 2
+    }
 }
 
 declare namespace RageEnums {
     export import HeadOverlay = RageEnums.Ped.HeadOverlay;
+    export import PlayerProp = RageEnums.Ped.Prop;
 }

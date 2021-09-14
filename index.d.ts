@@ -373,6 +373,8 @@ interface EntityMpPool<TEntity> {
 	toArray(): TEntity[];
 }
 
+type PlayerQuitType = "disconnect" | "timeout" | "kicked";
+
 interface EventMpPool {
 	add(eventName: RageEnums.EventKey | string, callback: (...args: any[]) => void): void;
 	add(events: ({ [name: string]: (...args: any[]) => void; })): void;
@@ -386,6 +388,34 @@ interface EventMpPool {
 	remove(eventName: string, handler?: (...args: any[]) => void): void;
 	remove(eventNames: string[]): void;
 	reset(): void;
+	
+	add(eventName: "playerChat", callback: (player: PlayerMp, text: string) => void): void;
+	add(eventName: "playerCommand", callback: (player: PlayerMp, command: string) => void): void;
+	add(eventName: "playerDamage", callback: (player: PlayerMp, healthLoss: number, armorLoss: PlayerMp) => void): void;
+	add(eventName: "playerDeath", callback: (player: PlayerMp, reason: number, killer: PlayerMp) => void): void;
+	add(eventName: "playerJoin", callback: (player: PlayerMp) => void): void;
+	add(eventName: "playerQuit", callback: (player: PlayerMp, exitType: PlayerQuitType, reason: string) => void): void;
+	add(eventName: "playerReady", callback: (player: PlayerMp) => void): void;
+	add(eventName: "playerSpawn", callback: (player: PlayerMp) => void): void;
+	add(eventName: "playerWeaponChange", callback: (player: PlayerMp, oldWeapon: number, newWeapon: PlayerMp) => void): void;
+
+	add(eventName: "playerStreamIn", callback: (player: PlayerMp, forPlayer: PlayerMp) => void): void;
+	add(eventName: "playerStreamOut", callback: (player: PlayerMp, forPlayer: PlayerMp) => void): void;
+
+	add(eventName: "playerStartEnterVehicle", callback: (player: PlayerMp, vehicle: VehicleMp, seat: number) => void): void;
+	add(eventName: "playerEnterVehicle", callback: (player: PlayerMp, vehicle: VehicleMp, seat: number) => void): void;
+	add(eventName: "playerStartExitVehicle", callback: (player: PlayerMp) => void): void;
+	add(eventName: "playerExitVehicle", callback: (player: PlayerMp, vehicle: VehicleMp) => void): void;
+
+	add(eventName: "playerEnterCheckpoint", callback: (player: PlayerMp, checkpoint: CheckpointMp) => void): void;
+	add(eventName: "playerExitCheckpoint", callback: (player: PlayerMp, checkpoint: CheckpointMp) => void): void;
+
+	add(eventName: "playerEnterColshape", callback: (player: PlayerMp, shape: ColshapeMp) => void): void;
+	add(eventName: "playerExitColshape", callback: (player: PlayerMp, shape: ColshapeMp) => void): void;
+
+	add(eventName: "entityCreated", callback: (entity: EntityMp) => void): void;
+	add(eventName: "entityDestroyed", callback: (entity: EntityMp) => void): void;
+	add(eventName: "entityModelChange", callback: (entity: EntityMp, oldModel: number) => void): void;
 }
 
 interface MarkerMpPool extends EntityMpPool<MarkerMp> {

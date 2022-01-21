@@ -32,13 +32,21 @@ interface Mp {
 	players: PlayerMpPool;
 	objects: ObjectMpPool;
 	vehicles: VehicleMpPool;
-	config: ConfigMp,
+	config: ConfigMp;
 	network: NetworkMp;
 	world: WorldMp;
 
-	Event: { 
-		new(eventName: RageEnums.EventKey | string, callback: (...args: any[]) => void): EventMp 
-	};
+	Blip: typeof BlipMp;
+	Checkpoint: typeof CheckpointMp;
+	DummyEntity: typeof DummyEntityMp;
+	Marker: typeof MarkerMp;
+	Ped: typeof PedMp;
+	Pickup: typeof PickupMp;
+	Player: typeof PlayerMp;
+	TextLabel: typeof TextLabelMp;
+	Vehicle: typeof VehicleMp;
+
+	Event: typeof EventMp;
 	Vector3: Vector3Mp;
 
 	joaat(str: string): number;
@@ -49,7 +57,8 @@ interface Mp {
 // Entity MP types
 // -------------------------------------------------------------------------
 
-interface BlipMp extends EntityMp {
+interface BlipMp extends EntityMp {}
+declare abstract class BlipMp {
 	color: number;
 	name: string;
 	drawDistance: number;
@@ -64,7 +73,8 @@ interface BlipMp extends EntityMp {
 	unrouteFor(players: PlayerMp[]): void;
 }
 
-interface CheckpointMp extends EntityMp {
+interface CheckpointMp extends EntityMp {}
+declare abstract class CheckpointMp {
 	color: number;
 	destination: Vector3Mp;
 	radius: number;
@@ -76,13 +86,14 @@ interface CheckpointMp extends EntityMp {
 	showFor(player: PlayerMp): void;
 }
 
-interface ColshapeMp extends EntityMp {
+interface ColshapeMp extends EntityMp {}
+declare abstract class ColshapeMp {
 	readonly shapeType: RageEnums.ColshapeType;
 
 	isPointWithin(point: Vector3Mp): boolean;
 }
 
-interface DummyEntityMp {
+declare abstract class DummyEntityMp {
 	dummyType: number;
 }
 
@@ -94,8 +105,8 @@ interface EntityMp {
 	position: Vector3Mp;
 	readonly id: number;
 	readonly type: RageEnums.EntityType;
-	
-	getVariable(name: string): any | undefined;
+
+	getVariable<T = any>(name: string): T | undefined;
 	destroy(): void;
 	dist(position: Vector3Mp): number;
 	distSquared(position: Vector3Mp): number;
@@ -103,7 +114,8 @@ interface EntityMp {
 	setVariables(values: KeyValueCollection): void;
 }
 
-interface MarkerMp extends EntityMp {
+interface MarkerMp extends EntityMp {}
+declare abstract class MarkerMp {
 	direction: Vector3Mp;
 	scale: number;
 	visible: boolean;
@@ -114,19 +126,23 @@ interface MarkerMp extends EntityMp {
 	showFor(player: PlayerMp): void;
 }
 
-interface PedMp extends EntityMp {
+interface PedMp extends EntityMp {}
+declare abstract class PedMp {
 	controller: PlayerMp;
 }
 
-interface ObjectMp extends EntityMp {
+interface ObjectMp extends EntityMp {}
+declare abstract class ObjectMp {
 	rotation: Vector3Mp;
 }
 
-interface PickupMp extends EntityMp {
+interface PickupMp extends EntityMp {}
+declare abstract class PickupMp {
 	pickupHash: number;
 }
 
-interface PlayerMp extends EntityMp {
+interface PlayerMp extends EntityMp {}
+declare abstract class PlayerMp {
 	armour: number;
 	eyeColor: number;
 	gameType: string;
@@ -188,7 +204,7 @@ interface PlayerMp extends EntityMp {
 	};
 	getHeadBlendPaletteColor(type: 0 | 1 | 2 | 3): Array3d;
 	getHeadOverlay(overlay: RageEnums.HeadOverlay | number): Array4d;
-	getOwnVariable(key: string): any;
+	getOwnVariable<T = any>(key: string): T | undefined;
 	getProp(prop: RageEnums.PlayerProp | number): {
 		drawable: number,
 		texture: number
@@ -233,14 +249,16 @@ interface PlayerMp extends EntityMp {
 	callToStreamed(includeSelf: boolean, eventName: string, args?: any[]): void;
 }
 
-interface TextLabelMp extends EntityMp {
+interface TextLabelMp extends EntityMp {}
+declare abstract class TextLabelMp {
 	color: RGB;
 	drawDistance: number;
 	los: boolean;
 	text: string;
 }
 
-interface VehicleMp extends EntityMp {
+interface VehicleMp extends EntityMp {}
+declare abstract class VehicleMp {
 	bodyHealth: number;
 	brake: boolean;
 	controller: PlayerMp | undefined;
@@ -271,7 +289,7 @@ interface VehicleMp extends EntityMp {
 	readonly extras: boolean[];
 	readonly heading: number;
 	readonly mods: number[];
-	readonly quaternion: QuaternionMp,
+	readonly quaternion: QuaternionMp;
 	readonly streamedPlayers: PlayerMp[];
 	readonly trailer: VehicleMp;
 	readonly traileredBy: VehicleMp;
@@ -326,36 +344,46 @@ interface WorldMp {
 	setWeatherTransition(weather: RageEnums.Weather | string, duration?: number): void;
 }
 
-interface EventMp {
+declare class EventMp {
+	constructor(eventName: RageEnums.EventKey | string, callback: (...args: any[]) => void);
+
+	/**
+	 * Adds the handler to the event tree.
+	 */
+	enable(): void;
+
+	/**
+	 * Removes all instances of this event handler from the events tree.
+	 */
 	destroy(): void;
 }
 
 interface ConfigMp {
-	announce: boolean,
-	bind: string,
-	gamemode: string,
-	encryption: boolean,
-	maxplayers: number,
-	name: string,
-	'stream-distance': number,
-	port: number,
-	'disallow-multiple-connections-per-ip': boolean,
-	'limit-time-of-connections-per-ip': number,
-	url: string,
-	language: string,
-	'sync-rate': number,
-	'resource-scan-thread-limit': number,
-	'max-ping': number,
-	'min-fps': number,
-	'max-packet-loss': number,
-	'allow-cef-debugging': boolean,
-	'enable-nodejs': boolean,
-	'csharp': boolean,
-	'enable-http-security': boolean,
-	'voice-chat': boolean,
-	'allow-voice-chat-input': number,
-	'voice-chat-sample-rate': number,
-	'fastdl-host': string,
+	announce: boolean;
+	bind: string;
+	gamemode: string;
+	encryption: boolean;
+	maxplayers: number;
+	name: string;
+	'stream-distance': number;
+	port: number;
+	'disallow-multiple-connections-per-ip': boolean;
+	'limit-time-of-connections-per-ip': number;
+	url: string;
+	language: string;
+	'sync-rate': number;
+	'resource-scan-thread-limit': number;
+	'max-ping': number;
+	'min-fps': number;
+	'max-packet-loss': number;
+	'allow-cef-debugging': boolean;
+	'enable-nodejs': boolean;
+	'csharp': boolean;
+	'enable-http-security': boolean;
+	'voice-chat': boolean;
+	'allow-voice-chat-input': number;
+	'voice-chat-sample-rate': number;
+	'fastdl-host': string;
 }
 
 // -------------------------------------------------------------------------
@@ -409,8 +437,8 @@ interface EntityMpPool<TEntity> {
 	forEachInRange(position: Vector3Mp, range: number, fn: (entity: TEntity) => void): void;
 	forEachInRange(position: Vector3Mp, range: number, dimension: number, fn: (entity: TEntity) => void): void;
 	forEachInDimension(dimension: number, fn: (entity: TEntity) => void): void;
-	getClosest(position: Vector3Mp): TEntity
-	getClosest(position: Vector3Mp, limit: number): TEntity[]
+	getClosest(position: Vector3Mp): TEntity;
+	getClosest(position: Vector3Mp, limit: number): TEntity[];
 	getClosestInDimension(position: Vector3Mp, dimension: number): TEntity;
 	getClosestInDimension(position: Vector3Mp, dimension: number, limit: number): TEntity[];
 	toArray(): TEntity[];
@@ -418,8 +446,8 @@ interface EntityMpPool<TEntity> {
 }
 
 interface EventMpPool {
-	delayShutdown: boolean
-	delayInitialization: boolean
+	delayShutdown: boolean;
+	delayInitialization: boolean;
 
 	add(eventName: RageEnums.EventKey.PLAYER_ENTER_CHECKPOINT, callback: (player: PlayerMp, checkpoint: CheckpointMp) => void): void;
 	add(eventName: RageEnums.EventKey.PLAYER_EXIT_CHECKPOINT, callback: (player: PlayerMp, checkpoint: CheckpointMp) => void): void;
@@ -438,7 +466,7 @@ interface EventMpPool {
 	add(eventName: RageEnums.EventKey.PLAYER_SPAWN, callback: (player: PlayerMp) => void): void;
 	add(eventName: RageEnums.EventKey.PLAYER_WEAPON_CHANGE, callback: (player: PlayerMp, oldWeapon: number, newWeapon: number) => void): void;
 	add(eventName: RageEnums.EventKey.SERVER_SHUTDOWN, callback: () => void): void;
-	add(eventName: RageEnums.EventKey.INCOMING_CONNECTION, callback: (ip: string, serial: string, rgscName: string, rgscId: string, gameType: string) => void): void; // TODO: test actual gameType type (most likely  string)
+	add(eventName: RageEnums.EventKey.INCOMING_CONNECTION, callback: (ip: string, serial: string, rgscName: string, rgscId: string, gameType: string) => void): void;
 	add(eventName: RageEnums.EventKey.PACKAGES_LOADED, callback: () => void): void;
 	add(eventName: RageEnums.EventKey.PLAYER_ENTER_VEHICLE, callback: (player: PlayerMp, vehicle: VehicleMp, seat: number) => void): void;
 	add(eventName: RageEnums.EventKey.PLAYER_EXIT_VEHICLE, callback: (player: PlayerMp, vehicle: VehicleMp) => void): void;
@@ -528,7 +556,7 @@ interface VehicleMpPool extends EntityMpPool<VehicleMp> {
 		color?: [ Array2d, Array2d ] | [ RGB, RGB ],
 		dimension?: number,
 		engine?: boolean,
-		heading?: number;
+		heading?: number,
 		locked?: boolean,
 		numberPlate?: string
 	}): VehicleMp;

@@ -32,7 +32,7 @@ interface Mp {
 	players: PlayerMpPool;
 	objects: ObjectMpPool;
 	vehicles: VehicleMpPool;
-	config: ConfigMp,
+	config: ConfigMp;
 	network: NetworkMp;
 	world: WorldMp;
 
@@ -105,7 +105,7 @@ interface EntityMp {
 	position: Vector3Mp;
 	readonly id: number;
 	readonly type: RageEnums.EntityType;
-	
+
 	getVariable<T = any>(name: string): T | undefined;
 	destroy(): void;
 	dist(position: Vector3Mp): number;
@@ -359,31 +359,31 @@ declare class EventMp {
 }
 
 interface ConfigMp {
-	announce: boolean,
-	bind: string,
-	gamemode: string,
-	encryption: boolean,
-	maxplayers: number,
-	name: string,
-	'stream-distance': number,
-	port: number,
-	'disallow-multiple-connections-per-ip': boolean,
-	'limit-time-of-connections-per-ip': number,
-	url: string,
-	language: string,
-	'sync-rate': number,
-	'resource-scan-thread-limit': number,
-	'max-ping': number,
-	'min-fps': number,
-	'max-packet-loss': number,
-	'allow-cef-debugging': boolean,
-	'enable-nodejs': boolean,
-	'csharp': boolean,
-	'enable-http-security': boolean,
-	'voice-chat': boolean,
-	'allow-voice-chat-input': number,
-	'voice-chat-sample-rate': number,
-	'fastdl-host': string,
+	announce: boolean;
+	bind: string;
+	gamemode: string;
+	encryption: boolean;
+	maxplayers: number;
+	name: string;
+	'stream-distance': number;
+	port: number;
+	'disallow-multiple-connections-per-ip': boolean;
+	'limit-time-of-connections-per-ip': number;
+	url: string;
+	language: string;
+	'sync-rate': number;
+	'resource-scan-thread-limit': number;
+	'max-ping': number;
+	'min-fps': number;
+	'max-packet-loss': number;
+	'allow-cef-debugging': boolean;
+	'enable-nodejs': boolean;
+	'csharp': boolean;
+	'enable-http-security': boolean;
+	'voice-chat': boolean;
+	'allow-voice-chat-input': number;
+	'voice-chat-sample-rate': number;
+	'fastdl-host': string;
 }
 
 // -------------------------------------------------------------------------
@@ -437,8 +437,8 @@ interface EntityMpPool<TEntity> {
 	forEachInRange(position: Vector3Mp, range: number, fn: (entity: TEntity) => void): void;
 	forEachInRange(position: Vector3Mp, range: number, dimension: number, fn: (entity: TEntity) => void): void;
 	forEachInDimension(dimension: number, fn: (entity: TEntity) => void): void;
-	getClosest(position: Vector3Mp): TEntity
-	getClosest(position: Vector3Mp, limit: number): TEntity[]
+	getClosest(position: Vector3Mp): TEntity;
+	getClosest(position: Vector3Mp, limit: number): TEntity[];
 	getClosestInDimension(position: Vector3Mp, dimension: number): TEntity;
 	getClosestInDimension(position: Vector3Mp, dimension: number, limit: number): TEntity[];
 	toArray(): TEntity[];
@@ -446,8 +446,8 @@ interface EntityMpPool<TEntity> {
 }
 
 interface EventMpPool {
-	delayShutdown: boolean
-	delayInitialization: boolean
+	delayShutdown: boolean;
+	delayInitialization: boolean;
 
 	add(eventName: RageEnums.EventKey.PLAYER_ENTER_CHECKPOINT, callback: (player: PlayerMp, checkpoint: CheckpointMp) => void): void;
 	add(eventName: RageEnums.EventKey.PLAYER_EXIT_CHECKPOINT, callback: (player: PlayerMp, checkpoint: CheckpointMp) => void): void;
@@ -556,7 +556,7 @@ interface VehicleMpPool extends EntityMpPool<VehicleMp> {
 		color?: [ Array2d, Array2d ] | [ RGB, RGB ],
 		dimension?: number,
 		engine?: boolean,
-		heading?: number;
+		heading?: number,
 		locked?: boolean,
 		numberPlate?: string
 	}): VehicleMp;

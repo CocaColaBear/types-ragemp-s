@@ -36,9 +36,17 @@ interface Mp {
 	network: NetworkMp;
 	world: WorldMp;
 
-	Event: { 
-		new(eventName: RageEnums.EventKey | string, callback: (...args: any[]) => void): EventMp 
-	};
+	Blip: typeof BlipMp;
+	Checkpoint: typeof CheckpointMp;
+	DummyEntity: typeof DummyEntityMp;
+	Marker: typeof MarkerMp;
+	Ped: typeof PedMp;
+	Pickup: typeof PickupMp;
+	Player: typeof PlayerMp;
+	TextLabel: typeof TextLabelMp;
+	Vehicle: typeof VehicleMp;
+
+	Event: typeof EventMp;
 	Vector3: Vector3Mp;
 
 	joaat(str: string): number;
@@ -49,7 +57,8 @@ interface Mp {
 // Entity MP types
 // -------------------------------------------------------------------------
 
-interface BlipMp extends EntityMp {
+interface BlipMp extends EntityMp {}
+declare abstract class BlipMp {
 	color: number;
 	name: string;
 	drawDistance: number;
@@ -64,7 +73,8 @@ interface BlipMp extends EntityMp {
 	unrouteFor(players: PlayerMp[]): void;
 }
 
-interface CheckpointMp extends EntityMp {
+interface CheckpointMp extends EntityMp {}
+declare abstract class CheckpointMp {
 	color: number;
 	destination: Vector3Mp;
 	radius: number;
@@ -76,13 +86,14 @@ interface CheckpointMp extends EntityMp {
 	showFor(player: PlayerMp): void;
 }
 
-interface ColshapeMp extends EntityMp {
+interface ColshapeMp extends EntityMp {}
+declare abstract class ColshapeMp {
 	readonly shapeType: RageEnums.ColshapeType;
 
 	isPointWithin(point: Vector3Mp): boolean;
 }
 
-interface DummyEntityMp {
+declare abstract class DummyEntityMp {
 	dummyType: number;
 }
 
@@ -103,7 +114,8 @@ interface EntityMp {
 	setVariables(values: KeyValueCollection): void;
 }
 
-interface MarkerMp extends EntityMp {
+interface MarkerMp extends EntityMp {}
+declare abstract class MarkerMp {
 	direction: Vector3Mp;
 	scale: number;
 	visible: boolean;
@@ -114,19 +126,23 @@ interface MarkerMp extends EntityMp {
 	showFor(player: PlayerMp): void;
 }
 
-interface PedMp extends EntityMp {
+interface PedMp extends EntityMp {}
+declare abstract class PedMp {
 	controller: PlayerMp;
 }
 
-interface ObjectMp extends EntityMp {
+interface ObjectMp extends EntityMp {}
+declare abstract class ObjectMp {
 	rotation: Vector3Mp;
 }
 
-interface PickupMp extends EntityMp {
+interface PickupMp extends EntityMp {}
+declare abstract class PickupMp {
 	pickupHash: number;
 }
 
-interface PlayerMp extends EntityMp {
+interface PlayerMp extends EntityMp {}
+declare abstract class PlayerMp {
 	armour: number;
 	eyeColor: number;
 	gameType: string;
@@ -233,14 +249,16 @@ interface PlayerMp extends EntityMp {
 	callToStreamed(includeSelf: boolean, eventName: string, args?: any[]): void;
 }
 
-interface TextLabelMp extends EntityMp {
+interface TextLabelMp extends EntityMp {}
+declare abstract class TextLabelMp {
 	color: RGB;
 	drawDistance: number;
 	los: boolean;
 	text: string;
 }
 
-interface VehicleMp extends EntityMp {
+interface VehicleMp extends EntityMp {}
+declare abstract class VehicleMp {
 	bodyHealth: number;
 	brake: boolean;
 	controller: PlayerMp | undefined;
@@ -271,7 +289,7 @@ interface VehicleMp extends EntityMp {
 	readonly extras: boolean[];
 	readonly heading: number;
 	readonly mods: number[];
-	readonly quaternion: QuaternionMp,
+	readonly quaternion: QuaternionMp;
 	readonly streamedPlayers: PlayerMp[];
 	readonly trailer: VehicleMp;
 	readonly traileredBy: VehicleMp;
@@ -326,7 +344,17 @@ interface WorldMp {
 	setWeatherTransition(weather: RageEnums.Weather | string, duration?: number): void;
 }
 
-interface EventMp {
+declare class EventMp {
+	constructor(eventName: RageEnums.EventKey | string, callback: (...args: any[]) => void);
+
+	/**
+	 * Adds the handler to the event tree.
+	 */
+	enable(): void;
+
+	/**
+	 * Removes all instances of this event handler from the events tree.
+	 */
 	destroy(): void;
 }
 

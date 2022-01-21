@@ -106,7 +106,7 @@ interface EntityMp {
 	readonly id: number;
 	readonly type: RageEnums.EntityType;
 	
-	getVariable(name: string): any | undefined;
+	getVariable<T = any>(name: string): T | undefined;
 	destroy(): void;
 	dist(position: Vector3Mp): number;
 	distSquared(position: Vector3Mp): number;
@@ -204,7 +204,7 @@ declare abstract class PlayerMp {
 	};
 	getHeadBlendPaletteColor(type: 0 | 1 | 2 | 3): Array3d;
 	getHeadOverlay(overlay: RageEnums.HeadOverlay | number): Array4d;
-	getOwnVariable(key: string): any;
+	getOwnVariable<T = any>(key: string): T | undefined;
 	getProp(prop: RageEnums.PlayerProp | number): {
 		drawable: number,
 		texture: number
@@ -466,7 +466,7 @@ interface EventMpPool {
 	add(eventName: RageEnums.EventKey.PLAYER_SPAWN, callback: (player: PlayerMp) => void): void;
 	add(eventName: RageEnums.EventKey.PLAYER_WEAPON_CHANGE, callback: (player: PlayerMp, oldWeapon: number, newWeapon: number) => void): void;
 	add(eventName: RageEnums.EventKey.SERVER_SHUTDOWN, callback: () => void): void;
-	add(eventName: RageEnums.EventKey.INCOMING_CONNECTION, callback: (ip: string, serial: string, rgscName: string, rgscId: string, gameType: string) => void): void; // TODO: test actual gameType type (most likely  string)
+	add(eventName: RageEnums.EventKey.INCOMING_CONNECTION, callback: (ip: string, serial: string, rgscName: string, rgscId: string, gameType: string) => void): void;
 	add(eventName: RageEnums.EventKey.PACKAGES_LOADED, callback: () => void): void;
 	add(eventName: RageEnums.EventKey.PLAYER_ENTER_VEHICLE, callback: (player: PlayerMp, vehicle: VehicleMp, seat: number) => void): void;
 	add(eventName: RageEnums.EventKey.PLAYER_EXIT_VEHICLE, callback: (player: PlayerMp, vehicle: VehicleMp) => void): void;
